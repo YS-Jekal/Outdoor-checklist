@@ -29,51 +29,79 @@
   --info-bg: #e8f4fd;
   --radius: 10px;
   --radius-sm: 6px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; background: var(--sand); font-family: -apple-system, 'Apple SD Gothic Neo', BlinkMacSystemFont, sans-serif; color: var(--dark); }
 
+/* ── 로그인 화면 ── */
+#login-screen {
+  position: fixed; inset: 0; background: var(--sea);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 999; padding: 2rem;
+}
+.login-logo { font-size: 56px; margin-bottom: 16px; }
+.login-title { font-size: 24px; font-weight: 700; color: white; margin-bottom: 6px; }
+.login-sub { font-size: 14px; color: rgba(255,255,255,.65); margin-bottom: 48px; text-align: center; line-height: 1.5; }
+.google-btn {
+  display: flex; align-items: center; gap: 12px;
+  background: white; color: #1c1a18;
+  border: none; border-radius: var(--radius);
+  padding: 14px 24px; font-size: 16px; font-weight: 600;
+  cursor: pointer; width: 100%; max-width: 300px;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.google-icon { width: 22px; height: 22px; }
+
+/* ── 유저 바 ── */
+.user-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; background: rgba(255,255,255,.12);
+  border-radius: 100px; cursor: pointer;
+}
+.user-avatar { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,.4); }
+.user-avatar-placeholder { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.25); display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.user-name { font-size: 12px; color: rgba(255,255,255,.85); max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── 저장 상태 표시 ── */
+.save-indicator {
+  font-size: 11px; color: rgba(255,255,255,.5);
+  display: flex; align-items: center; gap: 4px;
+}
+.save-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.3); }
+.save-dot.saving { background: #fbbf24; animation: pulse .8s infinite; }
+.save-dot.saved { background: #34d399; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
 /* ── 헤더 ── */
 .header {
-  background: var(--sea);
-  color: white;
+  background: var(--sea); color: white;
   padding: 52px 16px 14px;
   position: sticky; top: 0; z-index: 100;
 }
 .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.header-left {}
 .header-title { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
-.header-sub { font-size: 11px; opacity: .65; margin-top: 2px; }
-.reset-btn { background: rgba(255,255,255,.15); border: none; color: white; font-size: 12px; padding: 6px 12px; border-radius: 100px; cursor: pointer; }
+.header-sub { font-size: 11px; opacity: .65; margin-top: 2px; display: flex; align-items: center; gap: 6px; }
 
 /* ── 탭바 ── */
-.tab-bar {
-  display: flex; gap: 6px; padding: 10px 16px 0;
-  background: var(--sea);
-}
+.tab-bar { display: flex; gap: 6px; padding: 10px 16px 0; background: var(--sea); }
 .tab-btn {
   flex: 1; padding: 8px 4px 10px; border: none; border-radius: 10px 10px 0 0;
   background: rgba(255,255,255,.12); color: rgba(255,255,255,.7);
   font-size: 13px; font-weight: 500; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  transition: all .15s;
+  display: flex; flex-direction: column; align-items: center; gap: 3px; transition: all .15s;
 }
 .tab-btn .tab-icon { font-size: 18px; }
 .tab-btn.active { background: var(--sand); color: var(--sea); font-weight: 700; }
 
-/* ── 셀렉터 영역 ── */
+/* ── 셀렉터 ── */
 .selector-area { background: var(--white); padding: 12px 16px; border-bottom: 1px solid var(--pebble); }
 .sel-label { font-size: 10px; font-weight: 700; color: var(--rock); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; margin-top: 10px; }
 .sel-label:first-child { margin-top: 0; }
 .chip-row { display: flex; flex-wrap: wrap; gap: 5px; }
-.chip {
-  padding: 6px 12px; border-radius: 100px;
-  border: 1.5px solid var(--pebble);
-  background: var(--sand); color: var(--rock);
-  font-size: 13px; cursor: pointer;
-  display: flex; align-items: center; gap: 5px;
-  transition: all .12s;
-}
+.chip { padding: 6px 12px; border-radius: 100px; border: 1.5px solid var(--pebble); background: var(--sand); color: var(--rock); font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all .12s; }
 .chip.sel-blue { background: var(--info-bg); color: var(--info); border-color: var(--info); font-weight: 600; }
 .chip.sel-green { background: var(--success-bg); color: var(--success); border-color: var(--success); font-weight: 600; }
 .chip-check { font-size: 12px; display: none; }
@@ -83,12 +111,9 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
 
 /* ── 딸 동반 카드 ── */
 .kid-card {
-  margin: 10px 16px 0;
-  padding: 12px 14px;
-  background: var(--white);
-  border: 2px solid var(--pebble);
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: space-between;
+  margin: 10px 16px 0; padding: 12px 14px;
+  background: var(--white); border: 2px solid var(--pebble);
+  border-radius: var(--radius); display: flex; align-items: center; justify-content: space-between;
   cursor: pointer; transition: all .2s;
 }
 .kid-card.on { background: var(--warn-bg); border-color: var(--warn); }
@@ -98,13 +123,7 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
 .kid-card.on .kid-title { color: var(--warn); }
 .kid-desc { font-size: 11px; color: var(--rock); margin-top: 1px; }
 .kid-card.on .kid-desc { color: var(--warn); opacity: .8; }
-.kid-badge {
-  padding: 6px 14px; border-radius: 100px;
-  font-size: 14px; font-weight: 700;
-  border: 2px solid var(--pebble);
-  background: var(--sand); color: var(--rock);
-  transition: all .2s; min-width: 52px; text-align: center;
-}
+.kid-badge { padding: 6px 14px; border-radius: 100px; font-size: 14px; font-weight: 700; border: 2px solid var(--pebble); background: var(--sand); color: var(--rock); transition: all .2s; min-width: 52px; text-align: center; }
 .kid-card.on .kid-badge { background: var(--warn-bg); color: var(--warn); border-color: var(--warn); }
 
 /* ── 진행률 ── */
@@ -112,59 +131,29 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
 .progress-bar-bg { height: 4px; background: var(--pebble); border-radius: 100px; overflow: hidden; }
 .progress-bar-fill { height: 100%; background: var(--success); border-radius: 100px; transition: width .3s; }
 .progress-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.progress-label { font-size: 12px; color: var(--rock); }
 .progress-pct { font-size: 13px; font-weight: 700; color: var(--success); }
-.summary-pill {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 12px; padding: 4px 10px; border-radius: 100px;
-  font-weight: 500;
-}
+.summary-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 4px 10px; border-radius: 100px; font-weight: 500; }
 .pill-ok { background: var(--success-bg); color: var(--success); }
 .pill-warn { background: var(--warn-bg); color: var(--warn); }
 
-/* ── 스크롤 컨텐츠 ── */
+/* ── 컨텐츠 ── */
 .content { padding: 10px 16px 100px; }
-
-/* ── 선박 비치 섹션 ── */
-.boat-header-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 0 6px; cursor: pointer;
-}
+.boat-header-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 6px; cursor: pointer; }
 .boat-header-left { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--rock); text-transform: uppercase; letter-spacing: .07em; }
 .boat-toggle-chip { font-size: 11px; color: var(--rock); border: 1px solid var(--pebble); border-radius: 100px; padding: 2px 8px; background: var(--white); }
-.boat-notice {
-  display: flex; align-items: center; gap: 7px;
-  padding: 8px 12px; background: var(--info-bg);
-  border-radius: var(--radius-sm); margin-bottom: 8px;
-  font-size: 12px; color: var(--info); border: 1px solid rgba(26,110,168,.2);
-}
+.boat-notice { display: flex; align-items: center; gap: 7px; padding: 8px 12px; background: var(--info-bg); border-radius: var(--radius-sm); margin-bottom: 8px; font-size: 12px; color: var(--info); border: 1px solid rgba(26,110,168,.2); }
 .divider { height: 1px; background: var(--pebble); margin: 14px 0 10px; }
 
-/* ── 섹션 헤더 ── */
+/* ── 섹션 & 아이템 ── */
 .sec-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 0 5px; }
 .sec-title { font-size: 11px; font-weight: 700; color: var(--rock); text-transform: uppercase; letter-spacing: .07em; }
 .sec-prog { font-size: 11px; color: var(--rock); }
-
-/* ── 체크 아이템 ── */
-.item {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 10px 12px;
-  background: var(--white);
-  border: 1px solid var(--pebble);
-  border-radius: var(--radius-sm);
-  margin-bottom: 5px;
-  transition: all .12s;
-}
+.item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--white); border: 1px solid var(--pebble); border-radius: var(--radius-sm); margin-bottom: 5px; transition: all .12s; }
 .item.boat-item { background: #f9f7f4; }
 .item.checked { background: #f5faf7; border-color: #c5e0d0; }
 .item.deleted { opacity: .35; background: var(--sand); }
 .item-check { display: flex; align-items: flex-start; gap: 10px; flex: 1; min-width: 0; cursor: pointer; }
-.circle {
-  width: 22px; height: 22px; border-radius: 50%;
-  border: 2px solid var(--pebble); background: var(--white);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px; transition: all .15s;
-}
+.circle { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--pebble); background: var(--white); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: all .15s; }
 .item.checked .circle { background: var(--success); border-color: var(--success); }
 .check-svg { display: none; }
 .item.checked .check-svg { display: block; }
@@ -179,78 +168,80 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
 .tag-ess { background: var(--danger-bg); color: var(--danger); }
 .tag-kid { background: var(--warn-bg); color: var(--warn); }
 .tag-add { background: var(--success-bg); color: var(--success); }
-
 .item-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; margin-top: 1px; }
-.btn-del, .btn-restore {
-  width: 28px; height: 28px; border-radius: var(--radius-sm);
-  border: 1px solid var(--pebble); background: transparent;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  font-size: 14px; transition: all .12s;
-}
+.btn-del, .btn-restore { width: 28px; height: 28px; border-radius: var(--radius-sm); border: 1px solid var(--pebble); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all .12s; }
 .btn-del { color: var(--rock); }
 .btn-del:active { background: var(--danger-bg); color: var(--danger); border-color: var(--danger); }
 .btn-restore { color: var(--info); border-color: var(--info); background: var(--info-bg); }
-
-/* ── 항목 추가 ── */
 .add-row { display: flex; gap: 6px; margin: 4px 0 2px; }
-.add-input {
-  flex: 1; padding: 9px 12px; font-size: 14px;
-  border: 1px solid var(--pebble); border-radius: var(--radius-sm);
-  background: var(--white); color: var(--dark);
-  -webkit-appearance: none;
-}
+.add-input { flex: 1; padding: 9px 12px; font-size: 14px; border: 1px solid var(--pebble); border-radius: var(--radius-sm); background: var(--white); color: var(--dark); -webkit-appearance: none; }
 .add-input:focus { outline: none; border-color: var(--tide); }
 .add-input::placeholder { color: var(--rock); opacity: .6; }
-.add-btn {
-  padding: 9px 14px; font-size: 13px; font-weight: 600;
-  border: 1px solid var(--tide); border-radius: var(--radius-sm);
-  background: var(--sea-pale); color: var(--sea);
-  cursor: pointer; white-space: nowrap;
-}
+.add-btn { padding: 9px 14px; font-size: 13px; font-weight: 600; border: 1px solid var(--tide); border-radius: var(--radius-sm); background: var(--sea-pale); color: var(--sea); cursor: pointer; white-space: nowrap; }
 
 /* ── 하단 액션 ── */
-.action-bar {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  background: var(--white); border-top: 1px solid var(--pebble);
-  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-  display: flex; gap: 8px;
-}
-.action-btn {
-  flex: 1; padding: 12px; border-radius: var(--radius);
-  font-size: 15px; font-weight: 600; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-}
+.action-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--pebble); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); display: flex; gap: 8px; }
+.action-btn { flex: 1; padding: 12px; border-radius: var(--radius); font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .btn-secondary { border: 1.5px solid var(--pebble); background: var(--white); color: var(--rock); }
 .btn-primary { border: 1.5px solid var(--sea); background: var(--sea); color: var(--white); }
 
-/* ── 플레이스홀더 ── */
 .placeholder { text-align: center; padding: 3rem 1rem; color: var(--rock); }
 .placeholder-icon { font-size: 48px; margin-bottom: 10px; }
 .placeholder-text { font-size: 15px; }
+
+/* ── 로그아웃 팝업 ── */
+.user-popup { position: fixed; top: 100px; right: 16px; background: var(--white); border: 1px solid var(--pebble); border-radius: var(--radius); box-shadow: 0 4px 16px rgba(0,0,0,.12); padding: 8px; z-index: 200; display: none; min-width: 160px; }
+.user-popup.show { display: block; }
+.user-popup-name { font-size: 13px; color: var(--rock); padding: 6px 10px; border-bottom: 1px solid var(--pebble); margin-bottom: 4px; }
+.logout-btn { width: 100%; padding: 8px 10px; border: none; background: transparent; color: var(--danger); font-size: 14px; cursor: pointer; text-align: left; border-radius: var(--radius-sm); }
+.logout-btn:hover { background: var(--danger-bg); }
 </style>
 </head>
 <body>
 
+<!-- 로그인 화면 -->
+<div id="login-screen">
+  <div class="login-logo">⚓</div>
+  <div class="login-title">출조 체크리스트</div>
+  <div class="login-sub">경남 고성 · 6.5m 선외기<br>구글 로그인으로 어느 기기에서나<br>내 준비물 목록을 동기화해요</div>
+  <button class="google-btn" onclick="signInWithGoogle()">
+    <svg class="google-icon" viewBox="0 0 24 24">
+      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+    </svg>
+    Google로 로그인
+  </button>
+</div>
+
+<!-- 유저 팝업 -->
+<div class="user-popup" id="user-popup">
+  <div class="user-popup-name" id="popup-name"></div>
+  <button class="logout-btn" onclick="signOutUser()">🚪 로그아웃</button>
+</div>
+
 <div class="header">
   <div class="header-top">
-    <div>
+    <div class="header-left">
       <div class="header-title">⚓ 출조 체크리스트</div>
-      <div class="header-sub">경남 고성 · 6.5m 선외기</div>
+      <div class="header-sub">
+        경남 고성 · 6.5m 선외기
+        <span class="save-indicator"><span class="save-dot" id="save-dot"></span><span id="save-text"></span></span>
+      </div>
     </div>
-    <button class="reset-btn" onclick="resetCurrent()">초기화</button>
+    <div class="user-bar" id="user-bar" onclick="toggleUserPopup()">
+      <img class="user-avatar" id="user-avatar" src="" style="display:none">
+      <div class="user-avatar-placeholder" id="user-avatar-ph">👤</div>
+      <span class="user-name" id="user-name-label">로그인</span>
+    </div>
   </div>
 </div>
 
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="setMode('fishing')" id="mtab-fishing">
-    <span class="tab-icon">🎣</span>낚시
-  </button>
-  <button class="tab-btn" onclick="setMode('camping')" id="mtab-camping">
-    <span class="tab-icon">⛺</span>캠핑
-  </button>
-  <button class="tab-btn" onclick="setMode('stream')" id="mtab-stream">
-    <span class="tab-icon">🌊</span>천렵
-  </button>
+  <button class="tab-btn active" onclick="setMode('fishing')" id="mtab-fishing"><span class="tab-icon">🎣</span>낚시</button>
+  <button class="tab-btn" onclick="setMode('camping')" id="mtab-camping"><span class="tab-icon">⛺</span>캠핑</button>
+  <button class="tab-btn" onclick="setMode('stream')" id="mtab-stream"><span class="tab-icon">🌊</span>천렵</button>
 </div>
 
 <div class="selector-area">
@@ -289,9 +280,7 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
     <div id="summary-pill" class="summary-pill pill-warn">— 개 미완료</div>
     <div class="progress-pct" id="prog-pct">0%</div>
   </div>
-  <div class="progress-bar-bg">
-    <div class="progress-bar-fill" id="prog-fill" style="width:0%"></div>
-  </div>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
 </div>
 
 <div class="content" id="checklist"></div>
@@ -301,7 +290,142 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
   <button class="action-btn btn-primary" onclick="shareStatus()">📋 현황 복사</button>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc }
+  from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnHK45ILosYLfH2mezfXQWSrnZSz8C8jQ",
+  authDomain: "outdoor-checklist.firebaseapp.com",
+  projectId: "outdoor-checklist",
+  storageBucket: "outdoor-checklist.firebasestorage.app",
+  messagingSenderId: "1011975602797",
+  appId: "1:1011975602797:web:912bd296f094277e317564",
+  measurementId: "G-LSKC0NFEVW"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ── 전역 노출 ──────────────────────────────
+let currentUser = null;
+let saveTimer = null;
+
+window.signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  try { await signInWithPopup(auth, provider); }
+  catch(e) { alert('로그인 실패: ' + e.message); }
+};
+window.signOutUser = async () => {
+  if(!confirm('로그아웃 하시겠어요?')) return;
+  await signOut(auth);
+  toggleUserPopup(true);
+};
+window.toggleUserPopup = (forceClose) => {
+  const popup = document.getElementById('user-popup');
+  if(forceClose) { popup.classList.remove('show'); return; }
+  popup.classList.toggle('show');
+};
+document.addEventListener('click', e => {
+  if(!e.target.closest('#user-bar') && !e.target.closest('#user-popup'))
+    document.getElementById('user-popup').classList.remove('show');
+});
+
+// ── 저장/로드 ─────────────────────────────
+function setSaveStatus(status) {
+  const dot = document.getElementById('save-dot');
+  const txt = document.getElementById('save-text');
+  if(status === 'saving') { dot.className='save-dot saving'; txt.textContent='저장 중...'; }
+  else if(status === 'saved') { dot.className='save-dot saved'; txt.textContent='저장됨'; }
+  else { dot.className='save-dot'; txt.textContent=''; }
+}
+
+async function saveToFirestore() {
+  if(!currentUser) return;
+  setSaveStatus('saving');
+  try {
+    const data = {
+      mode, selMethods, selTargets,
+      selSeason, selStreamSeason,
+      kidOn, showBoat, checked,
+      custom: serializeCustom(),
+      updatedAt: new Date().toISOString()
+    };
+    await setDoc(doc(db, 'users', currentUser.uid), data);
+    setSaveStatus('saved');
+    setTimeout(()=>setSaveStatus('idle'), 2000);
+  } catch(e) {
+    setSaveStatus('idle');
+    console.error('저장 실패:', e);
+  }
+}
+
+async function loadFromFirestore() {
+  if(!currentUser) return;
+  try {
+    const snap = await getDoc(doc(db, 'users', currentUser.uid));
+    if(snap.exists()) {
+      const d = snap.data();
+      mode = d.mode || 'fishing';
+      selMethods = d.selMethods || [];
+      selTargets = d.selTargets || {};
+      selSeason = d.selSeason || null;
+      selStreamSeason = d.selStreamSeason || null;
+      kidOn = d.kidOn || false;
+      showBoat = d.showBoat !== false;
+      checked = d.checked || {};
+      if(d.custom) {
+        for(const k in d.custom) {
+          custom[k] = { deleted: new Set(d.custom[k].deleted), added: d.custom[k].added || [] };
+        }
+      }
+    }
+  } catch(e) { console.error('불러오기 실패:', e); }
+}
+
+function scheduleSave() {
+  if(saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveToFirestore, 1000);
+}
+
+// ── 인증 상태 감지 ────────────────────────
+onAuthStateChanged(auth, async (user) => {
+  const loginScreen = document.getElementById('login-screen');
+  if(user) {
+    currentUser = user;
+    loginScreen.style.display = 'none';
+    // 유저 정보 표시
+    const avatar = document.getElementById('user-avatar');
+    const avatarPh = document.getElementById('user-avatar-ph');
+    const nameLabel = document.getElementById('user-name-label');
+    const popupName = document.getElementById('popup-name');
+    if(user.photoURL) {
+      avatar.src = user.photoURL; avatar.style.display = 'block';
+      avatarPh.style.display = 'none';
+    }
+    const firstName = (user.displayName || '').split(' ')[0];
+    nameLabel.textContent = firstName || user.email;
+    popupName.textContent = user.displayName || user.email;
+    // Firestore에서 데이터 로드
+    await loadFromFirestore();
+    syncUI();
+    render();
+  } else {
+    currentUser = null;
+    loginScreen.style.display = 'flex';
+  }
+});
+
+function serializeCustom() {
+  const out = {};
+  for(const k in custom) { out[k] = { deleted: [...custom[k].deleted], added: custom[k].added }; }
+  return out;
+}
+
 // ══════════════════════════════════════════
 // 데이터
 // ══════════════════════════════════════════
@@ -329,7 +453,6 @@ const BOAT_PERMANENT=[{s:'선박 상시 비치 — 출항 전 확인',boat:true,
   {l:'연료 잔량 + 여유분 확인',ess:true},
   {l:'엔진 오일·냉각수 확인',ess:true},
 ]}];
-
 const BOAT_TAKEOUT=[
   {s:'출항 준비 — 당일',items:[
     {l:'출항 신고 (해경 앱 또는 전화)',law:true,ess:true,note:'귀항 신고도 필수'},
@@ -338,276 +461,118 @@ const BOAT_TAKEOUT=[
     {l:'핸드폰 방수팩',ess:true},
   ]},
   {s:'취사 & 보급',items:[
-    {l:'버너 + 가스 카트리지',ess:true},
-    {l:'코펠 / 냄비·팬'},
-    {l:'식기 & 수저'},
-    {l:'식재료 & 간식',ess:true},
-    {l:'식수 (충분히)',ess:true},
-    {l:'아이스박스 + 얼음',ess:true},
-    {l:'쓰레기봉투'},
+    {l:'버너 + 가스 카트리지',ess:true},{l:'코펠 / 냄비·팬'},{l:'식기 & 수저'},
+    {l:'식재료 & 간식',ess:true},{l:'식수 (충분히)',ess:true},
+    {l:'아이스박스 + 얼음',ess:true},{l:'쓰레기봉투'},
   ]},
   {s:'안전 & 개인',items:[
     {l:'응급 키트 (지혈대/붕대/소독약)',ess:true},
     {l:'멀미약 (출발 1시간 전 복용)',ess:true},
-    {l:'선크림 (방수용)',ess:true},
-    {l:'방충제'},
-    {l:'우비 / 방수 재킷',ess:true},
-    {l:'타올 & 여벌 옷'},
+    {l:'선크림 (방수용)',ess:true},{l:'방충제'},
+    {l:'우비 / 방수 재킷',ess:true},{l:'타올 & 여벌 옷'},
   ]},
 ];
-
 const FISHING_GEAR={
-  '찌낚시_벵에돔':{sections:[
-    {s:'채비 — 벵에돔',items:[{l:'전유동 찌 (00~B호)',ess:true,note:'조류 약할 때'},{l:'반유동 찌 (B~3B)',ess:true},{l:'벵에돔 전용 바늘 (5~7호)',ess:true},{l:'목줄 1.5~2.5호 카본',ess:true},{l:'원줄 2~3호 나일론',ess:true},{l:'봉돌 세트 (G2~G6)',ess:true},{l:'도래 & 스냅'},{l:'여분 목줄 (미리 묶기)',ess:true},{l:'뜰채 (연장대 3m+)',ess:true}]},
-    {s:'릴 & 낚싯대 — 벵에돔',items:[{l:'레버브레이크 릴 2500~3000번',ess:true,note:'LBD 방식 권장'},{l:'찌낚시 전용대 1~1.5호 5.3m',ess:true}]},
-    {s:'미끼 & 밑밥 — 벵에돔',items:[{l:'크릴새우 냉동 2~3봉',ess:true},{l:'오키아미+집어제 밑밥',ess:true},{l:'밑밥통 + 롱핸들 주걱',ess:true},{l:'편광글라스',ess:true}]},
-  ]},
-  '찌낚시_감성돔':{sections:[
-    {s:'채비 — 감성돔',items:[{l:'구멍찌 0~3B호',ess:true,note:'조류 타기 중요'},{l:'수중찌 B~2B',ess:true},{l:'감성돔 바늘 2~4호',ess:true},{l:'목줄 2~3호 카본',ess:true},{l:'원줄 3~4호',ess:true},{l:'봉돌 B~3B'},{l:'도래 & 스냅'},{l:'여분 목줄 (미리 묶기)',ess:true},{l:'뜰채',ess:true}]},
-    {s:'릴 & 낚싯대 — 감성돔',items:[{l:'스피닝 릴 3000번',ess:true},{l:'찌낚시대 1.5~2호 5.3m',ess:true}]},
-    {s:'미끼 & 밑밥 — 감성돔',items:[{l:'크릴새우 냉동 3봉',ess:true},{l:'참갯지렁이',ess:true},{l:'오키아미+크릴+집어제 밑밥',ess:true},{l:'밑밥통 + 롱핸들 주걱',ess:true},{l:'편광글라스',ess:true}]},
-  ]},
-  '찌낚시_참돔':{sections:[
-    {s:'채비 — 참돔',items:[{l:'대형 구멍찌 2~5B',ess:true},{l:'참돔 바늘 8~12호',ess:true},{l:'목줄 3~5호 카본',ess:true},{l:'원줄 4~5호',ess:true},{l:'봉돌 (무거운 편)',ess:true},{l:'뜰채',ess:true}]},
-    {s:'릴 & 낚싯대 — 참돔',items:[{l:'스피닝 릴 4000번+',ess:true},{l:'원투/갯바위대 3~5호',ess:true}]},
-    {s:'미끼 & 밑밥 — 참돔',items:[{l:'크릴새우 3봉+',ess:true},{l:'참돔 전용 집어제',ess:true},{l:'밑밥통 + 주걱',ess:true}]},
-  ]},
-  '찌낚시_볼락':{sections:[
-    {s:'채비 — 볼락',items:[{l:'소형 찌 (B~1호)',ess:true},{l:'볼락 바늘 5~7호',ess:true},{l:'목줄 1~1.5호',ess:true},{l:'원줄 2호',ess:true}]},
-    {s:'릴 & 낚싯대 — 볼락',items:[{l:'소형 스피닝 릴 1000~2000번',ess:true},{l:'라이트 낚싯대 1~1.5m',ess:true}]},
-    {s:'미끼 — 볼락',items:[{l:'크릴새우 (소)',ess:true},{l:'갯지렁이'},{l:'소형 웜'}]},
-  ]},
-  '루어_농어':{sections:[
-    {s:'채비 — 농어',items:[{l:'미노우 10~14cm',ess:true,note:'야마리아·숨SU 등'},{l:'펜슬베이트 (야간 표층)',ess:true},{l:'바이브레이션 20~30g'},{l:'PE라인 1~1.5호',ess:true},{l:'쇼크리더 30~40lb',ess:true},{l:'트레블훅 여분',ess:true}]},
-    {s:'릴 & 낚싯대 — 농어',items:[{l:'스피닝 릴 3000~4000번',ess:true},{l:'시배스 로드 9~10ft M~MH',ess:true}]},
-  ]},
-  '루어_방어':{sections:[
-    {s:'채비 — 방어 루어',items:[{l:'대형 팝퍼/펜슬',ess:true},{l:'대형 미노우 180mm+'},{l:'어시스트 훅 세트',ess:true},{l:'PE라인 3~5호',ess:true},{l:'쇼크리더 80~100lb',ess:true}]},
-    {s:'릴 & 낚싯대 — 방어',items:[{l:'스피닝 릴 8000~10000번',ess:true},{l:'오프쇼어 로드 MH~H',ess:true}]},
-  ]},
-  '루어_부시리':{sections:[
-    {s:'채비 — 부시리 루어',items:[{l:'대형 팝퍼/다이버 80~120g',ess:true},{l:'PE라인 4~6호',ess:true},{l:'쇼크리더 100lb+',ess:true},{l:'어시스트훅 강선재',ess:true}]},
-    {s:'릴 & 낚싯대 — 부시리',items:[{l:'하이기어 스피닝 릴 10000번',ess:true},{l:'GT/블루워터 로드',ess:true}]},
-  ]},
-  '루어_삼치':{sections:[
-    {s:'채비 — 삼치 루어',items:[{l:'메탈지그 20~40g',ess:true},{l:'와이어 리더 (이빨 대비)',ess:true},{l:'PE라인 1~2호',ess:true},{l:'쇼크리더 30lb',ess:true}]},
-    {s:'릴 & 낚싯대 — 삼치',items:[{l:'스피닝 릴 3000~4000번',ess:true},{l:'라이트 쇼어지깅 로드',ess:true}]},
-  ]},
-  '루어_갈치':{sections:[
-    {s:'채비 — 갈치',items:[{l:'갈치 전용 루어',ess:true},{l:'메탈지그 30~60g'},{l:'와이어 리더 필수',ess:true},{l:'PE라인 1.5~2호',ess:true}]},
-    {s:'릴 & 낚싯대 — 갈치',items:[{l:'스피닝 릴 3000번',ess:true},{l:'갈치 전용대 or 라이트로드',ess:true}]},
-  ]},
-  '에깅_무늬오징어':{sections:[
-    {s:'채비 — 무늬오징어',items:[{l:'에기 3~3.5호 (봄 대형)',ess:true,note:'색상 다양하게'},{l:'에기 2.5~3호 (가을 소형)'},{l:'샬로우 에기',ess:true},{l:'딥 에기',ess:true},{l:'PE라인 0.6~0.8호',ess:true},{l:'쇼크리더 2~2.5호 플로로',ess:true},{l:'에기 케이스',ess:true}]},
-    {s:'릴 & 낚싯대 — 에깅',items:[{l:'에깅 전용 릴 2500번',ess:true},{l:'에깅 로드 8~8.6ft',ess:true}]},
-  ]},
-  '에깅_흰오징어':{sections:[
-    {s:'채비 — 흰오징어',items:[{l:'에기 1.8~2.5호 소형',ess:true},{l:'야광/케미 에기',ess:true,note:'야간 효과'},{l:'PE라인 0.4~0.6호',ess:true},{l:'쇼크리더 1.5~2호',ess:true}]},
-    {s:'릴 & 낚싯대 — 흰오징어',items:[{l:'소형 스피닝 릴 1000~2000번',ess:true},{l:'라이트 에깅 로드 7~7.6ft',ess:true}]},
-  ]},
-  '원투_광어':{sections:[
-    {s:'채비 — 광어',items:[{l:'광어 전용 원투채비 2단',ess:true},{l:'광어 바늘 18~22호',ess:true},{l:'봉돌 30~50호',ess:true},{l:'목줄 5~7호 카본',ess:true},{l:'원줄 4~6호',ess:true}]},
-    {s:'릴 & 낚싯대 — 광어',items:[{l:'대형 스피닝 릴 5000~6000번',ess:true},{l:'원투대 4~5호 420cm+',ess:true}]},
-    {s:'미끼 — 광어',items:[{l:'살아있는 숭어/전갱이',ess:true,note:'생미끼 효과 탁월'},{l:'오징어 살 (냉동)',ess:true}]},
-  ]},
-  '원투_우럭':{sections:[
-    {s:'채비 — 우럭',items:[{l:'우럭 전용 채비 3단',ess:true},{l:'우럭 바늘 14~18호',ess:true},{l:'봉돌 50~100호',ess:true},{l:'목줄 4~6호',ess:true}]},
-    {s:'릴 & 낚싯대 — 우럭',items:[{l:'베이트릴 (선상용)',ess:true},{l:'선상 낚싯대 60~80호',ess:true}]},
-    {s:'미끼 — 우럭',items:[{l:'오징어 살',ess:true},{l:'갯지렁이',ess:true}]},
-  ]},
-  '원투_도다리':{sections:[
-    {s:'채비 — 도다리',items:[{l:'도다리 전용 채비',ess:true},{l:'바늘 13~16호',ess:true},{l:'봉돌 20~40호',ess:true},{l:'목줄 2~3호',ess:true}]},
-    {s:'릴 & 낚싯대 — 도다리',items:[{l:'스피닝 릴 4000번',ess:true},{l:'원투대 3~4호',ess:true}]},
-    {s:'미끼 — 도다리',items:[{l:'청갯지렁이 (필수)',ess:true},{l:'참갯지렁이'}]},
-  ]},
-  '원투_노래미':{sections:[
-    {s:'채비 — 노래미',items:[{l:'노래미 전용 채비',ess:true},{l:'바늘 12~15호',ess:true},{l:'봉돌 20~30호',ess:true}]},
-    {s:'릴 & 낚싯대 — 노래미',items:[{l:'스피닝 릴 3000~4000번',ess:true},{l:'원투대 3호',ess:true}]},
-    {s:'미끼 — 노래미',items:[{l:'갯지렁이',ess:true},{l:'오징어 살'}]},
-  ]},
-  '선상지깅_방어':{sections:[
-    {s:'채비 — 방어 지깅',items:[{l:'메탈지그 100~200g 롱형',ess:true,note:'수심·조류에 따라'},{l:'어시스트훅 앞뒤 세트',ess:true},{l:'PE라인 3~4호',ess:true},{l:'쇼크리더 60~80lb',ess:true},{l:'솔리드링 + 스플릿링',ess:true}]},
-    {s:'릴 & 낚싯대 — 방어 지깅',items:[{l:'지깅 전용 릴 8000번+ HG',ess:true},{l:'슬로우/패스트 지깅 로드',ess:true}]},
-  ]},
-  '선상지깅_부시리':{sections:[
-    {s:'채비 — 부시리 지깅',items:[{l:'메탈지그 150~250g',ess:true},{l:'어시스트훅 강선재',ess:true},{l:'PE라인 4~6호',ess:true},{l:'쇼크리더 80~100lb',ess:true}]},
-    {s:'릴 & 낚싯대 — 부시리 지깅',items:[{l:'파워 스피닝 릴 10000번',ess:true},{l:'오프쇼어 지깅 로드 H급',ess:true}]},
-  ]},
-  '선상지깅_참치':{sections:[
-    {s:'채비 — 참치 지깅',items:[{l:'대형 지그 200~400g',ess:true},{l:'강선재 어시스트훅',ess:true},{l:'PE라인 6~8호',ess:true},{l:'쇼크리더 130~150lb',ess:true}]},
-    {s:'릴 & 낚싯대 — 참치',items:[{l:'전동릴 or 대형 베이트릴',ess:true},{l:'참치 전용 로드 Extra Heavy',ess:true}]},
-  ]},
-  '선상지깅_히라스':{sections:[
-    {s:'채비 — 히라스',items:[{l:'메탈지그 100~150g',ess:true},{l:'어시스트훅',ess:true},{l:'PE라인 2~3호',ess:true},{l:'쇼크리더 40~60lb',ess:true}]},
-    {s:'릴 & 낚싯대 — 히라스',items:[{l:'스피닝 릴 6000~8000번',ess:true},{l:'지깅 로드 MH',ess:true}]},
-  ]},
-  '선상지깅_삼치':{sections:[
-    {s:'채비 — 삼치 지깅',items:[{l:'메탈지그 40~80g 속공형',ess:true},{l:'와이어 리더 필수',ess:true},{l:'PE라인 1.5~2호',ess:true}]},
-    {s:'릴 & 낚싯대 — 삼치 지깅',items:[{l:'스피닝 릴 4000번',ess:true},{l:'라이트 지깅 로드',ess:true}]},
-  ]},
-  '타이라바_참돔':{sections:[
-    {s:'채비 — 참돔 타이라바',items:[{l:'타이라바 헤드 40~120g',ess:true,note:'수심에 맞춰'},{l:'네크타이 레드/오렌지/핑크',ess:true},{l:'스커트 (컬러 다양)'},{l:'타이라바 훅 세트',ess:true},{l:'PE라인 0.8~1호',ess:true},{l:'쇼크리더 3~4호',ess:true},{l:'타이라바 케이스',ess:true}]},
-    {s:'릴 & 낚싯대 — 참돔 타이라바',items:[{l:'베이트릴 타이라바 전용 LH',ess:true},{l:'타이라바 로드 60~100g',ess:true}]},
-  ]},
-  '타이라바_부시리':{sections:[
-    {s:'채비 — 부시리 타이라바',items:[{l:'헤비 타이라바 헤드 120~200g',ess:true},{l:'대형 훅 세트',ess:true},{l:'PE라인 2~3호',ess:true},{l:'쇼크리더 50~60lb',ess:true}]},
-    {s:'릴 & 낚싯대 — 부시리 타이라바',items:[{l:'파워 베이트릴',ess:true},{l:'헤비 타이라바 로드',ess:true}]},
-  ]},
-  '타이라바_방어':{sections:[
-    {s:'채비 — 방어 타이라바',items:[{l:'헤비 타이라바 헤드 150~200g',ess:true},{l:'대형 훅 + 어시스트훅',ess:true},{l:'PE라인 3~4호',ess:true},{l:'쇼크리더 60~80lb',ess:true}]},
-    {s:'릴 & 낚싯대 — 방어 타이라바',items:[{l:'파워 베이트릴 HG',ess:true},{l:'오프쇼어 타이라바 로드',ess:true}]},
-  ]},
-  '타이라바_대구':{sections:[
-    {s:'채비 — 대구 타이라바',items:[{l:'대구용 타이라바/테우 200~400g',ess:true},{l:'대구 바늘 (대형)',ess:true},{l:'PE라인 3~4호',ess:true},{l:'쇼크리더 60lb',ess:true},{l:'오징어 생미끼 조합',ess:true}]},
-    {s:'릴 & 낚싯대 — 대구 타이라바',items:[{l:'전동릴 or 카운터 베이트릴',ess:true,note:'겨울 심해 기준'},{l:'딥지깅 or 선상 로드',ess:true}]},
-  ]},
+  '찌낚시_벵에돔':{sections:[{s:'채비 — 벵에돔',items:[{l:'전유동 찌 (00~B호)',ess:true,note:'조류 약할 때'},{l:'반유동 찌 (B~3B)',ess:true},{l:'벵에돔 전용 바늘 (5~7호)',ess:true},{l:'목줄 1.5~2.5호 카본',ess:true},{l:'원줄 2~3호 나일론',ess:true},{l:'봉돌 세트 (G2~G6)',ess:true},{l:'도래 & 스냅'},{l:'여분 목줄 (미리 묶기)',ess:true},{l:'뜰채 (연장대 3m+)',ess:true}]},{s:'릴 & 낚싯대 — 벵에돔',items:[{l:'레버브레이크 릴 2500~3000번',ess:true,note:'LBD 방식 권장'},{l:'찌낚시 전용대 1~1.5호 5.3m',ess:true}]},{s:'미끼 & 밑밥 — 벵에돔',items:[{l:'크릴새우 냉동 2~3봉',ess:true},{l:'오키아미+집어제 밑밥',ess:true},{l:'밑밥통 + 롱핸들 주걱',ess:true},{l:'편광글라스',ess:true}]}]},
+  '찌낚시_감성돔':{sections:[{s:'채비 — 감성돔',items:[{l:'구멍찌 0~3B호',ess:true,note:'조류 타기 중요'},{l:'수중찌 B~2B',ess:true},{l:'감성돔 바늘 2~4호',ess:true},{l:'목줄 2~3호 카본',ess:true},{l:'원줄 3~4호',ess:true},{l:'봉돌 B~3B'},{l:'도래 & 스냅'},{l:'여분 목줄 (미리 묶기)',ess:true},{l:'뜰채',ess:true}]},{s:'릴 & 낚싯대 — 감성돔',items:[{l:'스피닝 릴 3000번',ess:true},{l:'찌낚시대 1.5~2호 5.3m',ess:true}]},{s:'미끼 & 밑밥 — 감성돔',items:[{l:'크릴새우 냉동 3봉',ess:true},{l:'참갯지렁이',ess:true},{l:'오키아미+크릴+집어제 밑밥',ess:true},{l:'밑밥통 + 롱핸들 주걱',ess:true},{l:'편광글라스',ess:true}]}]},
+  '찌낚시_참돔':{sections:[{s:'채비 — 참돔',items:[{l:'대형 구멍찌 2~5B',ess:true},{l:'참돔 바늘 8~12호',ess:true},{l:'목줄 3~5호 카본',ess:true},{l:'원줄 4~5호',ess:true},{l:'봉돌 (무거운 편)',ess:true},{l:'뜰채',ess:true}]},{s:'릴 & 낚싯대 — 참돔',items:[{l:'스피닝 릴 4000번+',ess:true},{l:'원투/갯바위대 3~5호',ess:true}]},{s:'미끼 & 밑밥 — 참돔',items:[{l:'크릴새우 3봉+',ess:true},{l:'참돔 전용 집어제',ess:true},{l:'밑밥통 + 주걱',ess:true}]}]},
+  '찌낚시_볼락':{sections:[{s:'채비 — 볼락',items:[{l:'소형 찌 (B~1호)',ess:true},{l:'볼락 바늘 5~7호',ess:true},{l:'목줄 1~1.5호',ess:true},{l:'원줄 2호',ess:true}]},{s:'릴 & 낚싯대 — 볼락',items:[{l:'소형 스피닝 릴 1000~2000번',ess:true},{l:'라이트 낚싯대 1~1.5m',ess:true}]},{s:'미끼 — 볼락',items:[{l:'크릴새우 (소)',ess:true},{l:'갯지렁이'},{l:'소형 웜'}]}]},
+  '루어_농어':{sections:[{s:'채비 — 농어',items:[{l:'미노우 10~14cm',ess:true,note:'야마리아·숨SU 등'},{l:'펜슬베이트 (야간 표층)',ess:true},{l:'바이브레이션 20~30g'},{l:'PE라인 1~1.5호',ess:true},{l:'쇼크리더 30~40lb',ess:true},{l:'트레블훅 여분',ess:true}]},{s:'릴 & 낚싯대 — 농어',items:[{l:'스피닝 릴 3000~4000번',ess:true},{l:'시배스 로드 9~10ft M~MH',ess:true}]}]},
+  '루어_방어':{sections:[{s:'채비 — 방어 루어',items:[{l:'대형 팝퍼/펜슬',ess:true},{l:'대형 미노우 180mm+'},{l:'어시스트 훅 세트',ess:true},{l:'PE라인 3~5호',ess:true},{l:'쇼크리더 80~100lb',ess:true}]},{s:'릴 & 낚싯대 — 방어',items:[{l:'스피닝 릴 8000~10000번',ess:true},{l:'오프쇼어 로드 MH~H',ess:true}]}]},
+  '루어_부시리':{sections:[{s:'채비 — 부시리 루어',items:[{l:'대형 팝퍼/다이버 80~120g',ess:true},{l:'PE라인 4~6호',ess:true},{l:'쇼크리더 100lb+',ess:true},{l:'어시스트훅 강선재',ess:true}]},{s:'릴 & 낚싯대 — 부시리',items:[{l:'하이기어 스피닝 릴 10000번',ess:true},{l:'GT/블루워터 로드',ess:true}]}]},
+  '루어_삼치':{sections:[{s:'채비 — 삼치 루어',items:[{l:'메탈지그 20~40g',ess:true},{l:'와이어 리더 (이빨 대비)',ess:true},{l:'PE라인 1~2호',ess:true},{l:'쇼크리더 30lb',ess:true}]},{s:'릴 & 낚싯대 — 삼치',items:[{l:'스피닝 릴 3000~4000번',ess:true},{l:'라이트 쇼어지깅 로드',ess:true}]}]},
+  '루어_갈치':{sections:[{s:'채비 — 갈치',items:[{l:'갈치 전용 루어',ess:true},{l:'메탈지그 30~60g'},{l:'와이어 리더 필수',ess:true},{l:'PE라인 1.5~2호',ess:true}]},{s:'릴 & 낚싯대 — 갈치',items:[{l:'스피닝 릴 3000번',ess:true},{l:'갈치 전용대 or 라이트로드',ess:true}]}]},
+  '에깅_무늬오징어':{sections:[{s:'채비 — 무늬오징어',items:[{l:'에기 3~3.5호 (봄 대형)',ess:true,note:'색상 다양하게'},{l:'에기 2.5~3호 (가을 소형)'},{l:'샬로우 에기',ess:true},{l:'딥 에기',ess:true},{l:'PE라인 0.6~0.8호',ess:true},{l:'쇼크리더 2~2.5호 플로로',ess:true},{l:'에기 케이스',ess:true}]},{s:'릴 & 낚싯대 — 에깅',items:[{l:'에깅 전용 릴 2500번',ess:true},{l:'에깅 로드 8~8.6ft',ess:true}]}]},
+  '에깅_흰오징어':{sections:[{s:'채비 — 흰오징어',items:[{l:'에기 1.8~2.5호 소형',ess:true},{l:'야광/케미 에기',ess:true,note:'야간 효과'},{l:'PE라인 0.4~0.6호',ess:true},{l:'쇼크리더 1.5~2호',ess:true}]},{s:'릴 & 낚싯대 — 흰오징어',items:[{l:'소형 스피닝 릴 1000~2000번',ess:true},{l:'라이트 에깅 로드 7~7.6ft',ess:true}]}]},
+  '원투_광어':{sections:[{s:'채비 — 광어',items:[{l:'광어 전용 원투채비 2단',ess:true},{l:'광어 바늘 18~22호',ess:true},{l:'봉돌 30~50호',ess:true},{l:'목줄 5~7호 카본',ess:true},{l:'원줄 4~6호',ess:true}]},{s:'릴 & 낚싯대 — 광어',items:[{l:'대형 스피닝 릴 5000~6000번',ess:true},{l:'원투대 4~5호 420cm+',ess:true}]},{s:'미끼 — 광어',items:[{l:'살아있는 숭어/전갱이',ess:true,note:'생미끼 효과 탁월'},{l:'오징어 살 (냉동)',ess:true}]}]},
+  '원투_우럭':{sections:[{s:'채비 — 우럭',items:[{l:'우럭 전용 채비 3단',ess:true},{l:'우럭 바늘 14~18호',ess:true},{l:'봉돌 50~100호',ess:true},{l:'목줄 4~6호',ess:true}]},{s:'릴 & 낚싯대 — 우럭',items:[{l:'베이트릴 (선상용)',ess:true},{l:'선상 낚싯대 60~80호',ess:true}]},{s:'미끼 — 우럭',items:[{l:'오징어 살',ess:true},{l:'갯지렁이',ess:true}]}]},
+  '원투_도다리':{sections:[{s:'채비 — 도다리',items:[{l:'도다리 전용 채비',ess:true},{l:'바늘 13~16호',ess:true},{l:'봉돌 20~40호',ess:true},{l:'목줄 2~3호',ess:true}]},{s:'릴 & 낚싯대 — 도다리',items:[{l:'스피닝 릴 4000번',ess:true},{l:'원투대 3~4호',ess:true}]},{s:'미끼 — 도다리',items:[{l:'청갯지렁이 (필수)',ess:true},{l:'참갯지렁이'}]}]},
+  '원투_노래미':{sections:[{s:'채비 — 노래미',items:[{l:'노래미 전용 채비',ess:true},{l:'바늘 12~15호',ess:true},{l:'봉돌 20~30호',ess:true}]},{s:'릴 & 낚싯대 — 노래미',items:[{l:'스피닝 릴 3000~4000번',ess:true},{l:'원투대 3호',ess:true}]},{s:'미끼 — 노래미',items:[{l:'갯지렁이',ess:true},{l:'오징어 살'}]}]},
+  '선상지깅_방어':{sections:[{s:'채비 — 방어 지깅',items:[{l:'메탈지그 100~200g 롱형',ess:true,note:'수심·조류에 따라'},{l:'어시스트훅 앞뒤 세트',ess:true},{l:'PE라인 3~4호',ess:true},{l:'쇼크리더 60~80lb',ess:true},{l:'솔리드링 + 스플릿링',ess:true}]},{s:'릴 & 낚싯대 — 방어 지깅',items:[{l:'지깅 전용 릴 8000번+ HG',ess:true},{l:'슬로우/패스트 지깅 로드',ess:true}]}]},
+  '선상지깅_부시리':{sections:[{s:'채비 — 부시리 지깅',items:[{l:'메탈지그 150~250g',ess:true},{l:'어시스트훅 강선재',ess:true},{l:'PE라인 4~6호',ess:true},{l:'쇼크리더 80~100lb',ess:true}]},{s:'릴 & 낚싯대 — 부시리 지깅',items:[{l:'파워 스피닝 릴 10000번',ess:true},{l:'오프쇼어 지깅 로드 H급',ess:true}]}]},
+  '선상지깅_참치':{sections:[{s:'채비 — 참치 지깅',items:[{l:'대형 지그 200~400g',ess:true},{l:'강선재 어시스트훅',ess:true},{l:'PE라인 6~8호',ess:true},{l:'쇼크리더 130~150lb',ess:true}]},{s:'릴 & 낚싯대 — 참치',items:[{l:'전동릴 or 대형 베이트릴',ess:true},{l:'참치 전용 로드 Extra Heavy',ess:true}]}]},
+  '선상지깅_히라스':{sections:[{s:'채비 — 히라스',items:[{l:'메탈지그 100~150g',ess:true},{l:'어시스트훅',ess:true},{l:'PE라인 2~3호',ess:true},{l:'쇼크리더 40~60lb',ess:true}]},{s:'릴 & 낚싯대 — 히라스',items:[{l:'스피닝 릴 6000~8000번',ess:true},{l:'지깅 로드 MH',ess:true}]}]},
+  '선상지깅_삼치':{sections:[{s:'채비 — 삼치 지깅',items:[{l:'메탈지그 40~80g 속공형',ess:true},{l:'와이어 리더 필수',ess:true},{l:'PE라인 1.5~2호',ess:true}]},{s:'릴 & 낚싯대 — 삼치 지깅',items:[{l:'스피닝 릴 4000번',ess:true},{l:'라이트 지깅 로드',ess:true}]}]},
+  '타이라바_참돔':{sections:[{s:'채비 — 참돔 타이라바',items:[{l:'타이라바 헤드 40~120g',ess:true,note:'수심에 맞춰'},{l:'네크타이 레드/오렌지/핑크',ess:true},{l:'스커트 (컬러 다양)'},{l:'타이라바 훅 세트',ess:true},{l:'PE라인 0.8~1호',ess:true},{l:'쇼크리더 3~4호',ess:true},{l:'타이라바 케이스',ess:true}]},{s:'릴 & 낚싯대 — 참돔 타이라바',items:[{l:'베이트릴 타이라바 전용 LH',ess:true},{l:'타이라바 로드 60~100g',ess:true}]}]},
+  '타이라바_부시리':{sections:[{s:'채비 — 부시리 타이라바',items:[{l:'헤비 타이라바 헤드 120~200g',ess:true},{l:'대형 훅 세트',ess:true},{l:'PE라인 2~3호',ess:true},{l:'쇼크리더 50~60lb',ess:true}]},{s:'릴 & 낚싯대 — 부시리 타이라바',items:[{l:'파워 베이트릴',ess:true},{l:'헤비 타이라바 로드',ess:true}]}]},
+  '타이라바_방어':{sections:[{s:'채비 — 방어 타이라바',items:[{l:'헤비 타이라바 헤드 150~200g',ess:true},{l:'대형 훅 + 어시스트훅',ess:true},{l:'PE라인 3~4호',ess:true},{l:'쇼크리더 60~80lb',ess:true}]},{s:'릴 & 낚싯대 — 방어 타이라바',items:[{l:'파워 베이트릴 HG',ess:true},{l:'오프쇼어 타이라바 로드',ess:true}]}]},
+  '타이라바_대구':{sections:[{s:'채비 — 대구 타이라바',items:[{l:'대구용 타이라바/테우 200~400g',ess:true},{l:'대구 바늘 (대형)',ess:true},{l:'PE라인 3~4호',ess:true},{l:'쇼크리더 60lb',ess:true},{l:'오징어 생미끼 조합',ess:true}]},{s:'릴 & 낚싯대 — 대구 타이라바',items:[{l:'전동릴 or 카운터 베이트릴',ess:true,note:'겨울 심해 기준'},{l:'딥지깅 or 선상 로드',ess:true}]}]},
 };
-
-const KID_BOAT=[{s:'딸 동반 필수',items:[
-  {l:'아이용 구명조끼 (체중 맞춤)',kid:true,ess:true},
-  {l:'어린이 멀미약 (출발 1시간 전)',kid:true,ess:true},
-  {l:'선글라스 UV차단',kid:true,ess:true},
-  {l:'여벌 옷 2벌+',kid:true,ess:true},
-  {l:'응급 상비약 (해열제/소화제)',kid:true,ess:true},
-  {l:'모기기피제 어린이용',kid:true},
-  {l:'간식 & 음료 별도',kid:true,ess:true},
-  {l:'선박 안전 교육 (출발 전)',kid:true,ess:true},
-  {l:'미끄럼 방지 신발',kid:true,ess:true},
-]}];
-
-const CAMPING_DATA={
-  '봄':[{s:'침구 & 쉘터 (봄)',items:[{l:'3시즌 텐트',ess:true},{l:'침낭 10°C 대응'},{l:'매트/에어패드',ess:true},{l:'타프 & 로프',ess:true}]},{s:'의류 (봄)',items:[{l:'얇은 겉옷 일교차 대비',ess:true},{l:'방풍 재킷'},{l:'선크림',ess:true},{l:'모기기피제',ess:true}]}],
-  '여름':[{s:'침구 & 쉘터 (여름)',items:[{l:'통풍 텐트',ess:true},{l:'타프 (그늘 필수)',ess:true},{l:'그늘막',ess:true}]},{s:'의류 (여름)',items:[{l:'래쉬가드 & 수영복',ess:true},{l:'선크림 SPF50+',ess:true},{l:'방충제',ess:true},{l:'쿨타올'}]}],
-  '가을':[{s:'침구 & 쉘터 (가을)',items:[{l:'3시즌 텐트',ess:true},{l:'침낭 5°C 대응',ess:true},{l:'매트',ess:true}]},{s:'의류 (가을)',items:[{l:'중간두께 겉옷',ess:true},{l:'방풍 재킷',ess:true},{l:'장갑 (아침/밤)'}]}],
-  '겨울':[{s:'침구 & 쉘터 (겨울)',items:[{l:'4시즌 텐트',ess:true},{l:'동계 침낭 -10°C',ess:true},{l:'보온 매트',ess:true},{l:'이너텐트',ess:true}]},{s:'의류 (겨울)',items:[{l:'패딩 & 방한복',ess:true},{l:'핫팩 다량',ess:true},{l:'방한장갑 & 모자',ess:true},{l:'두꺼운 양말',ess:true}]}],
-};
-const CAMPING_COMMON=[
-  {s:'취사 & 식량',items:[{l:'버너 + 가스 카트리지',ess:true},{l:'코펠',ess:true},{l:'식기 & 수저',ess:true},{l:'식재료 & 간식',ess:true},{l:'식수',ess:true},{l:'아이스박스',ess:true},{l:'세제 & 수세미'},{l:'쓰레기봉투'}]},
-  {s:'편의 & 안전',items:[{l:'랜턴 & 배터리',ess:true},{l:'응급 키트',ess:true},{l:'보조 배터리',ess:true},{l:'캠핑 테이블 & 의자'}]},
-];
-const KID_CAMPING=[{s:'딸 동반 (캠핑)',items:[
-  {l:'어린이 침낭 or 담요',kid:true,ess:true},{l:'야광 팔찌 (야간 안전)',kid:true,ess:true},
-  {l:'어린이 취침 매트',kid:true},{l:'캠핑 놀이 도구',kid:true},
-  {l:'아이 전용 세면도구',kid:true},{l:'여벌 옷 2벌+',kid:true,ess:true},
-  {l:'응급 상비약',kid:true,ess:true},
-]}];
-
-const STREAM_COMMON=[
-  {s:'채집 도구',items:[{l:'족대 (뜰채)',ess:true},{l:'채집통 & 물통',ess:true},{l:'양동이'},{l:'장갑 & 핀셋',ess:true},{l:'생물 도감 or 앱'}]},
-  {s:'입수 & 안전',items:[{l:'수륙양용 샌들 or 아쿠아슈즈',ess:true},{l:'방수 반바지 or 워터팬츠',ess:true},{l:'래쉬가드',ess:true},{l:'선크림 방수용',ess:true}]},
-  {s:'취사 & 식량',items:[{l:'버너 + 가스',ess:true},{l:'코펠',ess:true},{l:'식재료 & 간식',ess:true},{l:'식수',ess:true},{l:'아이스박스'}]},
-  {s:'편의 & 위생',items:[{l:'돗자리 & 그늘막',ess:true},{l:'물티슈 & 핸드워시',ess:true},{l:'타올 여분',ess:true},{l:'쓰레기봉투'},{l:'방수 파우치 (핸드폰)',ess:true}]},
-];
-const STREAM_SEASONAL={
-  '봄':[{s:'계절 주의 (봄)',items:[{l:'긴소매 방충복',ess:true},{l:'방수 레깅스 (수온 낮음)',ess:true}]}],
-  '여름':[{s:'계절 주의 (여름)',items:[{l:'선크림 방수 SPF50+',ess:true},{l:'충분한 식수',ess:true},{l:'모자',ess:true}]}],
-  '가을':[{s:'계절 주의 (가을)',items:[{l:'얇은 겉옷',ess:true},{l:'방수 레깅스',ess:true}]}],
-  '겨울':[{s:'계절 주의 (겨울)',items:[{l:'방한 장갑',ess:true},{l:'워터프루프 장화',ess:true},{l:'핫팩',ess:true}]}],
-};
-const KID_STREAM=[{s:'딸 동반 (천렵)',items:[
-  {l:'아이용 구명조끼',kid:true,ess:true},{l:'어린이 아쿠아슈즈',kid:true,ess:true},
-  {l:'옷 여벌 3벌',kid:true,ess:true},{l:'체온 유지 겉옷',kid:true,ess:true},
-  {l:'상처 연고 + 밴드',kid:true,ess:true},{l:'방수 기저귀 (필요시)',kid:true},
-]}];
+const KID_BOAT=[{s:'딸 동반 필수',items:[{l:'아이용 구명조끼 (체중 맞춤)',kid:true,ess:true},{l:'어린이 멀미약 (출발 1시간 전)',kid:true,ess:true},{l:'선글라스 UV차단',kid:true,ess:true},{l:'여벌 옷 2벌+',kid:true,ess:true},{l:'응급 상비약 (해열제/소화제)',kid:true,ess:true},{l:'모기기피제 어린이용',kid:true},{l:'간식 & 음료 별도',kid:true,ess:true},{l:'선박 안전 교육 (출발 전)',kid:true,ess:true},{l:'미끄럼 방지 신발',kid:true,ess:true}]}];
+const CAMPING_DATA={'봄':[{s:'침구 & 쉘터 (봄)',items:[{l:'3시즌 텐트',ess:true},{l:'침낭 10°C 대응'},{l:'매트/에어패드',ess:true},{l:'타프 & 로프',ess:true}]},{s:'의류 (봄)',items:[{l:'얇은 겉옷 일교차 대비',ess:true},{l:'방풍 재킷'},{l:'선크림',ess:true},{l:'모기기피제',ess:true}]}],'여름':[{s:'침구 & 쉘터 (여름)',items:[{l:'통풍 텐트',ess:true},{l:'타프 (그늘 필수)',ess:true},{l:'그늘막',ess:true}]},{s:'의류 (여름)',items:[{l:'래쉬가드 & 수영복',ess:true},{l:'선크림 SPF50+',ess:true},{l:'방충제',ess:true},{l:'쿨타올'}]}],'가을':[{s:'침구 & 쉘터 (가을)',items:[{l:'3시즌 텐트',ess:true},{l:'침낭 5°C 대응',ess:true},{l:'매트',ess:true}]},{s:'의류 (가을)',items:[{l:'중간두께 겉옷',ess:true},{l:'방풍 재킷',ess:true},{l:'장갑 (아침/밤)'}]}],'겨울':[{s:'침구 & 쉘터 (겨울)',items:[{l:'4시즌 텐트',ess:true},{l:'동계 침낭 -10°C',ess:true},{l:'보온 매트',ess:true},{l:'이너텐트',ess:true}]},{s:'의류 (겨울)',items:[{l:'패딩 & 방한복',ess:true},{l:'핫팩 다량',ess:true},{l:'방한장갑 & 모자',ess:true},{l:'두꺼운 양말',ess:true}]}]};
+const CAMPING_COMMON=[{s:'취사 & 식량',items:[{l:'버너 + 가스 카트리지',ess:true},{l:'코펠',ess:true},{l:'식기 & 수저',ess:true},{l:'식재료 & 간식',ess:true},{l:'식수',ess:true},{l:'아이스박스',ess:true},{l:'세제 & 수세미'},{l:'쓰레기봉투'}]},{s:'편의 & 안전',items:[{l:'랜턴 & 배터리',ess:true},{l:'응급 키트',ess:true},{l:'보조 배터리',ess:true},{l:'캠핑 테이블 & 의자'}]}];
+const KID_CAMPING=[{s:'딸 동반 (캠핑)',items:[{l:'어린이 침낭 or 담요',kid:true,ess:true},{l:'야광 팔찌 (야간 안전)',kid:true,ess:true},{l:'어린이 취침 매트',kid:true},{l:'캠핑 놀이 도구',kid:true},{l:'아이 전용 세면도구',kid:true},{l:'여벌 옷 2벌+',kid:true,ess:true},{l:'응급 상비약',kid:true,ess:true}]}];
+const STREAM_COMMON=[{s:'채집 도구',items:[{l:'족대 (뜰채)',ess:true},{l:'채집통 & 물통',ess:true},{l:'양동이'},{l:'장갑 & 핀셋',ess:true},{l:'생물 도감 or 앱'}]},{s:'입수 & 안전',items:[{l:'수륙양용 샌들 or 아쿠아슈즈',ess:true},{l:'방수 반바지 or 워터팬츠',ess:true},{l:'래쉬가드',ess:true},{l:'선크림 방수용',ess:true}]},{s:'취사 & 식량',items:[{l:'버너 + 가스',ess:true},{l:'코펠',ess:true},{l:'식재료 & 간식',ess:true},{l:'식수',ess:true},{l:'아이스박스'}]},{s:'편의 & 위생',items:[{l:'돗자리 & 그늘막',ess:true},{l:'물티슈 & 핸드워시',ess:true},{l:'타올 여분',ess:true},{l:'쓰레기봉투'},{l:'방수 파우치 (핸드폰)',ess:true}]}];
+const STREAM_SEASONAL={'봄':[{s:'계절 주의 (봄)',items:[{l:'긴소매 방충복',ess:true},{l:'방수 레깅스 (수온 낮음)',ess:true}]}],'여름':[{s:'계절 주의 (여름)',items:[{l:'선크림 방수 SPF50+',ess:true},{l:'충분한 식수',ess:true},{l:'모자',ess:true}]}],'가을':[{s:'계절 주의 (가을)',items:[{l:'얇은 겉옷',ess:true},{l:'방수 레깅스',ess:true}]}],'겨울':[{s:'계절 주의 (겨울)',items:[{l:'방한 장갑',ess:true},{l:'워터프루프 장화',ess:true},{l:'핫팩',ess:true}]}]};
+const KID_STREAM=[{s:'딸 동반 (천렵)',items:[{l:'아이용 구명조끼',kid:true,ess:true},{l:'어린이 아쿠아슈즈',kid:true,ess:true},{l:'옷 여벌 3벌',kid:true,ess:true},{l:'체온 유지 겉옷',kid:true,ess:true},{l:'상처 연고 + 밴드',kid:true,ess:true},{l:'방수 기저귀 (필요시)',kid:true}]}];
 
 // ══════════════════════════════════════════
-// 상태
+// 앱 상태
 // ══════════════════════════════════════════
 let mode='fishing', selMethods=[], selTargets={};
 let selSeason=null, selStreamSeason=null;
 let kidOn=false, showBoat=true;
 let checked={}, custom={};
 
-function saveState(){
-  try{
-    localStorage.setItem('jouchoPWA', JSON.stringify({mode,selMethods,selTargets,selSeason,selStreamSeason,kidOn,showBoat,checked,custom:serializeCustom()}));
-  }catch(e){}
-}
-function serializeCustom(){
-  const out={};
-  for(const k in custom){ out[k]={deleted:[...custom[k].deleted],added:custom[k].added}; }
-  return out;
-}
-function loadState(){
-  try{
-    const s=localStorage.getItem('jouchoPWA');
-    if(!s)return;
-    const d=JSON.parse(s);
-    mode=d.mode||'fishing'; selMethods=d.selMethods||[]; selTargets=d.selTargets||{};
-    selSeason=d.selSeason||null; selStreamSeason=d.selStreamSeason||null;
-    kidOn=d.kidOn||false; showBoat=d.showBoat!==false; checked=d.checked||{};
-    if(d.custom){ for(const k in d.custom){ custom[k]={deleted:new Set(d.custom[k].deleted),added:d.custom[k].added||[]}; } }
-  }catch(e){}
-}
-
 function ckey(sec,item){ return mode+'§'+sec+'§'+item; }
 function getCustom(sec){ if(!custom[mode+'|'+sec]) custom[mode+'|'+sec]={deleted:new Set(),added:[]}; return custom[mode+'|'+sec]; }
 
-// ══════════════════════════════════════════
-// 이벤트
-// ══════════════════════════════════════════
-function setMode(m){
-  mode=m;
+function syncUI() {
   ['fishing','camping','stream'].forEach(t=>{
-    document.getElementById('mtab-'+t).classList.toggle('active',t===m);
-    document.getElementById(t+'-sel').style.display=t===m?'':'none';
+    document.getElementById('mtab-'+t).classList.toggle('active',t===mode);
+    document.getElementById(t+'-sel').style.display=t===mode?'':'none';
   });
-  render(); saveState();
+  const kidCard=document.getElementById('kid-card');
+  const kidBadge=document.getElementById('kid-badge');
+  const kidDesc=document.getElementById('kid-desc');
+  kidCard.classList.toggle('on',kidOn);
+  kidBadge.textContent=kidOn?'YES':'NO';
+  kidDesc.textContent=kidOn?'아이 동반 항목이 표시됩니다':'아이 동반 항목이 추가됩니다';
 }
 
-function toggleMethod(m){
+window.setMode = (m) => { mode=m; syncUI(); render(); scheduleSave(); };
+window.toggleKid = () => { kidOn=!kidOn; syncUI(); render(); scheduleSave(); };
+window.toggleBoat = () => { showBoat=!showBoat; render(); scheduleSave(); };
+window.resetCurrent = () => {
+  if(!confirm('현재 탭의 체크를 모두 초기화할까요?')) return;
+  Object.keys(checked).filter(k=>k.startsWith(mode+'§')).forEach(k=>delete checked[k]);
+  render(); scheduleSave();
+};
+window.toggleCheck = (k) => { checked[k]=!checked[k]; render(); scheduleSave(); };
+window.deleteItem = (sec,label) => { getCustom(sec).deleted.add(label); delete checked[ckey(sec,label)]; render(); scheduleSave(); };
+window.restoreItem = (sec,label) => { getCustom(sec).deleted.delete(label); render(); scheduleSave(); };
+window.addItem = (sec,inputId) => {
+  const inp=document.getElementById(inputId);
+  const val=(inp.value||'').trim(); if(!val) return;
+  getCustom(sec).added.push({l:val,note:''});
+  inp.value=''; render(); scheduleSave();
+};
+window.deleteAdded = (sec,idx) => { getCustom(sec).added.splice(idx,1); render(); scheduleSave(); };
+window.toggleMethod = (m) => {
   const i=selMethods.indexOf(m);
   if(i>=0){selMethods.splice(i,1);delete selTargets[m];}
   else{selMethods.push(m);selTargets[m]=[];}
-  render(); saveState();
-}
-function toggleTarget(method,target){
-  if(!selTargets[method])selTargets[method]=[];
+  render(); scheduleSave();
+};
+window.toggleTarget = (method,target) => {
+  if(!selTargets[method]) selTargets[method]=[];
   const i=selTargets[method].indexOf(target);
-  if(i>=0)selTargets[method].splice(i,1);
+  if(i>=0) selTargets[method].splice(i,1);
   else selTargets[method].push(target);
-  render(); saveState();
-}
-function toggleKid(){
-  kidOn=!kidOn;
-  const card=document.getElementById('kid-card');
-  const badge=document.getElementById('kid-badge');
-  const desc=document.getElementById('kid-desc');
-  card.classList.toggle('on',kidOn);
-  badge.textContent=kidOn?'YES':'NO';
-  desc.textContent=kidOn?'아이 동반 항목이 표시됩니다':'아이 동반 항목이 추가됩니다';
-  render(); saveState();
-}
-function toggleBoat(){ showBoat=!showBoat; render(); saveState(); }
+  render(); scheduleSave();
+};
 
-function toggleCheck(k){ checked[k]=!checked[k]; render(); saveState(); }
-function deleteItem(sec,label){ getCustom(sec).deleted.add(label); delete checked[ckey(sec,label)]; render(); saveState(); }
-function restoreItem(sec,label){ getCustom(sec).deleted.delete(label); render(); saveState(); }
-function addItem(sec,inputId){
-  const inp=document.getElementById(inputId);
-  const val=(inp.value||'').trim(); if(!val)return;
-  getCustom(sec).added.push({l:val,note:''});
-  inp.value=''; render(); saveState();
-}
-function deleteAdded(sec,idx){ getCustom(sec).added.splice(idx,1); render(); saveState(); }
-
-function resetCurrent(){
-  if(!confirm('현재 탭의 체크를 모두 초기화할까요?'))return;
-  Object.keys(checked).filter(k=>k.startsWith(mode+'§')).forEach(k=>delete checked[k]);
-  render(); saveState();
-}
-
-function shareStatus(){
-  const {boat,main}=getSections();
+window.shareStatus = () => {
   const mn={fishing:'낚시',camping:'캠핑',stream:'천렵'};
   let txt=`⚓ 출조 체크리스트 — ${mn[mode]}\n`;
   if(mode==='fishing'){
     if(selMethods.length) txt+=`방법: ${selMethods.join('+')} `;
-    const tgts=[]; selMethods.forEach(m=>{ if(selTargets[m]&&selTargets[m].length)tgts.push(...selTargets[m]); });
+    const tgts=[]; selMethods.forEach(m=>{if(selTargets[m]&&selTargets[m].length)tgts.push(...selTargets[m]);});
     if(tgts.length) txt+=`어종: ${tgts.join(', ')}`;
   }
   if(kidOn) txt+=' 👧딸 동반';
   txt+='\n\n';
+  const {boat,main}=getSections();
   [...boat,...main].forEach(sec=>{
     const cx=getCustom(sec.s);
     const items=[...sec.items.filter(it=>!cx.deleted.has(it.l)),...cx.added];
@@ -617,21 +582,18 @@ function shareStatus(){
   });
   if(navigator.share){ navigator.share({title:'출조 체크리스트',text:txt}); }
   else{ navigator.clipboard.writeText(txt).then(()=>alert('클립보드에 복사됐어요!')); }
-}
+};
 
-// ══════════════════════════════════════════
-// 데이터 조합
-// ══════════════════════════════════════════
 function getSections(){
   if(mode==='fishing'){
-    if(!selMethods.length)return{boat:[],main:[]};
+    if(!selMethods.length) return{boat:[],main:[]};
     const gear=[]; const seen={};
     selMethods.forEach(method=>{
       const tgts=(selTargets[method]&&selTargets[method].length)?selTargets[method]:[];
       tgts.forEach(target=>{
-        const gd=FISHING_GEAR[method+'_'+target]; if(!gd)return;
+        const gd=FISHING_GEAR[method+'_'+target]; if(!gd) return;
         gd.sections.forEach(sec=>{
-          const filtered=sec.items.filter(it=>{ if(seen[it.l])return false; seen[it.l]=true; return true; });
+          const filtered=sec.items.filter(it=>{ if(seen[it.l]) return false; seen[it.l]=true; return true; });
           if(filtered.length) gear.push({...sec,items:filtered});
         });
       });
@@ -649,27 +611,22 @@ function getSections(){
   return{boat:[],main:[]};
 }
 
-// ══════════════════════════════════════════
-// 렌더
-// ══════════════════════════════════════════
 function buildSelectors(){
-  // 낚시 방법
   const mr=document.getElementById('method-row'); mr.innerHTML='';
   METHODS.forEach(m=>{
     const sel=selMethods.includes(m);
     const btn=document.createElement('button');
     btn.className='chip'+(sel?' sel-blue':'');
     btn.innerHTML=(sel?'<span class="chip-check">✓</span>':'')+m;
-    btn.onclick=()=>toggleMethod(m);
+    btn.onclick=()=>window.toggleMethod(m);
     mr.appendChild(btn);
   });
-  // 어종
   const ts=document.getElementById('target-section');
   const tr=document.getElementById('target-row'); tr.innerHTML='';
   if(selMethods.length){
     ts.style.display='';
     selMethods.forEach(method=>{
-      const targets=TARGETS[method]||[]; if(!targets.length)return;
+      const targets=TARGETS[method]||[]; if(!targets.length) return;
       const grp=document.createElement('div'); grp.className='method-group';
       const lbl=document.createElement('div'); lbl.className='method-group-name'; lbl.textContent=method;
       grp.appendChild(lbl);
@@ -679,31 +636,23 @@ function buildSelectors(){
         const btn=document.createElement('button');
         btn.className='chip'+(sel?' sel-green':'');
         btn.innerHTML=(sel?'<span class="chip-check">✓</span>':'')+t;
-        btn.onclick=()=>toggleTarget(method,t);
+        btn.onclick=()=>window.toggleTarget(method,t);
         row.appendChild(btn);
       });
       grp.appendChild(row); tr.appendChild(grp);
     });
   } else { ts.style.display='none'; }
-  // 계절 (캠핑)
-  const sr=document.getElementById('season-row'); sr.innerHTML='';
-  SEASONS.forEach(s=>{
-    const sel=selSeason===s;
-    const btn=document.createElement('button');
-    btn.className='chip'+(sel?' sel-blue':'');
-    btn.innerHTML=(sel?'<span class="chip-check">✓</span>':'')+s;
-    btn.onclick=()=>{selSeason=s;render();saveState();};
-    sr.appendChild(btn);
-  });
-  // 계절 (천렵)
-  const ssr=document.getElementById('stream-season-row'); ssr.innerHTML='';
-  SEASONS.forEach(s=>{
-    const sel=selStreamSeason===s;
-    const btn=document.createElement('button');
-    btn.className='chip'+(sel?' sel-blue':'');
-    btn.innerHTML=(sel?'<span class="chip-check">✓</span>':'')+s;
-    btn.onclick=()=>{selStreamSeason=s;render();saveState();};
-    ssr.appendChild(btn);
+  ['season-row','stream-season-row'].forEach((id,i)=>{
+    const sr=document.getElementById(id); sr.innerHTML='';
+    const current=i===0?selSeason:selStreamSeason;
+    SEASONS.forEach(s=>{
+      const sel=current===s;
+      const btn=document.createElement('button');
+      btn.className='chip'+(sel?' sel-blue':'');
+      btn.innerHTML=(sel?'<span class="chip-check">✓</span>':'')+s;
+      btn.onclick=()=>{ if(i===0){selSeason=s;}else{selStreamSeason=s;} render(); scheduleSave(); };
+      sr.appendChild(btn);
+    });
   });
 }
 
@@ -716,71 +665,53 @@ function renderSections(container,sections,isBoat){
     const allActive=[...baseItems,...cx.added];
     const sd=allActive.filter(it=>!!checked[ckey(sec.s,it.l)]).length;
     total+=allActive.length; done+=sd;
-
-    // 섹션 헤더
     const hdr=document.createElement('div'); hdr.className='sec-header';
     hdr.innerHTML=`<span class="sec-title">${isBoat?'⚓ ':''}${sec.s}</span><span class="sec-prog">${sd}/${allActive.length}</span>`;
     container.appendChild(hdr);
-
-    // 활성 아이템
     allActive.forEach((it,ii)=>{
       const isAdded=ii>=baseItems.length;
       const k=ckey(sec.s,it.l);
       const isC=!!checked[k];
       const card=document.createElement('div');
       card.className='item'+(isC?' checked':'')+(isBoat?' boat-item':'');
-
       let tagHtml='';
       if(!isC){
         const tags=[];
-        if(it.law)tags.push('<span class="tag tag-law">법정</span>');
-        else if(it.ess)tags.push('<span class="tag tag-ess">필수</span>');
-        if(it.kid)tags.push('<span class="tag tag-kid">아이</span>');
-        if(isAdded)tags.push('<span class="tag tag-add">추가</span>');
-        if(tags.length)tagHtml=`<div class="tags">${tags.join('')}</div>`;
+        if(it.law) tags.push('<span class="tag tag-law">법정</span>');
+        else if(it.ess) tags.push('<span class="tag tag-ess">필수</span>');
+        if(it.kid) tags.push('<span class="tag tag-kid">아이</span>');
+        if(isAdded) tags.push('<span class="tag tag-add">추가</span>');
+        if(tags.length) tagHtml=`<div class="tags">${tags.join('')}</div>`;
       }
       const noteHtml=it.note?`<div class="item-note">${it.note}</div>`:'';
-
-      const safeLabel=it.l.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-      const safeSec=sec.s.replace(/'/g,"\\'");
-
+      const safeLabel=it.l.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      const safeSec=sec.s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
       card.innerHTML=`
         <div class="item-check" onclick="toggleCheck('${k}')">
-          <div class="circle">
-            <svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none">
-              <path d="M1 4L4.5 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="item-body">
-            <div class="item-label">${it.l}</div>
-            ${noteHtml}${tagHtml}
-          </div>
+          <div class="circle"><svg class="check-svg" width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="item-body"><div class="item-label">${it.l}</div>${noteHtml}${tagHtml}</div>
         </div>
         <div class="item-actions">
           ${isAdded
             ? `<button class="btn-del" onclick="deleteAdded('${safeSec}',${ii-baseItems.length})">✕</button>`
-            : `<button class="btn-del" onclick="deleteItem('${safeSec}','${safeLabel}')">✕</button>`
-          }
+            : `<button class="btn-del" onclick="deleteItem('${safeSec}','${safeLabel}')">✕</button>`}
         </div>`;
       container.appendChild(card);
     });
-
-    // 삭제된 아이템 (복원 가능)
     deletedItems.forEach(it=>{
       const card=document.createElement('div'); card.className='item deleted';
-      const safeLabel=it.l.replace(/'/g,"\\'");
-      const safeSec=sec.s.replace(/'/g,"\\'");
+      const safeLabel=it.l.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      const safeSec=sec.s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
       card.innerHTML=`
         <div class="item-check"><div class="item-body"><div class="item-label">${it.l}</div></div></div>
         <div class="item-actions"><button class="btn-restore" onclick="restoreItem('${safeSec}','${safeLabel}')">↩</button></div>`;
       container.appendChild(card);
     });
-
-    // 항목 추가 입력
     const addId='ai-'+mode+'-'+si;
     const addRow=document.createElement('div'); addRow.className='add-row';
-    addRow.innerHTML=`<input class="add-input" id="${addId}" placeholder="항목 직접 추가..."><button class="add-btn" onclick="addItem('${sec.s.replace(/'/g,"\\'")}','${addId}')">+ 추가</button>`;
-    addRow.querySelector('input').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); addItem(sec.s,addId); } });
+    const safeSec2=sec.s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    addRow.innerHTML=`<input class="add-input" id="${addId}" placeholder="항목 직접 추가..."><button class="add-btn" onclick="addItem('${safeSec2}','${addId}')">+ 추가</button>`;
+    addRow.querySelector('input').addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();window.addItem(sec.s,addId);} });
     container.appendChild(addRow);
   });
   return{total,done};
@@ -790,7 +721,6 @@ function render(){
   buildSelectors();
   const{boat,main}=getSections();
   const container=document.getElementById('checklist'); container.innerHTML='';
-
   if(mode==='fishing'&&!selMethods.length){
     container.innerHTML='<div class="placeholder"><div class="placeholder-icon">🎣</div><div class="placeholder-text">낚시 방법을 선택하세요</div></div>';
     document.getElementById('prog-fill').style.width='0%';
@@ -807,11 +737,9 @@ function render(){
     document.getElementById('summary-pill').textContent='계절을 먼저 선택하세요';
     return;
   }
-
-  // 선박 상시 비치
   if(boat.length){
     const bw=document.createElement('div');
-    const bt=document.createElement('div'); bt.className='boat-header-row'; bt.onclick=toggleBoat;
+    const bt=document.createElement('div'); bt.className='boat-header-row'; bt.onclick=window.toggleBoat;
     bt.innerHTML=`<div class="boat-header-left">⚓ 선박 상시 비치 — 출항 전 확인</div><span class="boat-toggle-chip">${showBoat?'접기 ▲':'펼치기 ▼'}</span>`;
     bw.appendChild(bt);
     if(showBoat){
@@ -823,35 +751,15 @@ function render(){
     }
     container.appendChild(bw);
   }
-
   const{total,done}=renderSections(container,main,false);
   const pct=total>0?Math.round(done/total*100):0;
   document.getElementById('prog-fill').style.width=pct+'%';
   document.getElementById('prog-pct').textContent=pct+'%';
   const pill=document.getElementById('summary-pill');
-  if(done===total&&total>0){
-    pill.className='summary-pill pill-ok'; pill.textContent='✅ 출항 준비 완료!';
-  } else {
-    pill.className='summary-pill pill-warn'; pill.textContent=`${total-done}개 아직 미완료`;
-  }
+  if(done===total&&total>0){ pill.className='summary-pill pill-ok'; pill.textContent='✅ 출항 준비 완료!'; }
+  else { pill.className='summary-pill pill-warn'; pill.textContent=`${total-done}개 아직 미완료`; }
 }
 
-// ══════════════════════════════════════════
-// 초기화
-// ══════════════════════════════════════════
-loadState();
-// 탭 셀렉터 동기화
-['fishing','camping','stream'].forEach(t=>{
-  document.getElementById('mtab-'+t).classList.toggle('active',t===mode);
-  document.getElementById(t+'-sel').style.display=t===mode?'':'none';
-});
-// 딸 카드 동기화
-if(kidOn){
-  document.getElementById('kid-card').classList.add('on');
-  document.getElementById('kid-badge').textContent='YES';
-  document.getElementById('kid-desc').textContent='아이 동반 항목이 표시됩니다';
-}
-render();
 </script>
 </body>
 </html>
