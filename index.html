@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="출조 체크">
 <meta name="theme-color" content="#0f4c75">
-<title>출조 체크리스트</title>
+<title>아웃도어 활동 체크리스트</title>
 <style>
 :root {
   --sea: #0f4c75;
@@ -305,9 +305,9 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
 <div class="header">
   <div class="header-top">
     <div class="header-left">
-      <div class="header-title">⚓ 출조 체크리스트</div>
+      <div class="header-title">⚓ 아웃도어 활동 체크리스트</div>
       <div class="header-sub">
-        경남 고성 · 6.5m 선외기
+        레저인의 완벽한 동반자
         <span class="save-indicator"><span class="save-dot" id="save-dot"></span><span id="save-text"></span></span>
       </div>
     </div>
@@ -770,7 +770,7 @@ window.toggleTarget = (method,target) => {
 
 window.shareStatus = () => {
   const mn={fishing:'낚시',camping:'캠핑',stream:'천렵'};
-  let txt=`⚓ 출조 체크리스트 — ${mn[mode]}\n`;
+  let txt=`⚓ 아웃도어 활동 체크리스트 — ${mn[mode]}\n`;
   if(mode==='fishing'){
     if(selMethods.length) txt+=`방법: ${selMethods.join('+')} `;
     const tgts=[]; selMethods.forEach(m=>{if(selTargets[m]&&selTargets[m].length)tgts.push(...selTargets[m]);});
@@ -786,7 +786,7 @@ window.shareStatus = () => {
     items.forEach(it=>{ txt+=(checked[ckey(sec.s,it.l)]?'  ✅ ':'  ☐ ')+it.l+'\n'; });
     txt+='\n';
   });
-  if(navigator.share){ navigator.share({title:'출조 체크리스트',text:txt}); }
+  if(navigator.share){ navigator.share({title:'아웃도어 활동 체크리스트',text:txt}); }
   else{ navigator.clipboard.writeText(txt).then(()=>alert('클립보드에 복사됐어요!')); }
 };
 
