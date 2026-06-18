@@ -195,6 +195,58 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
 .user-popup-name { font-size: 13px; color: var(--rock); padding: 6px 10px; border-bottom: 1px solid var(--pebble); margin-bottom: 4px; }
 .logout-btn { width: 100%; padding: 8px 10px; border: none; background: transparent; color: var(--danger); font-size: 14px; cursor: pointer; text-align: left; border-radius: var(--radius-sm); }
 .logout-btn:hover { background: var(--danger-bg); }
+.admin-menu-btn { width: 100%; padding: 8px 10px; border: none; background: transparent; color: var(--sea); font-size: 14px; font-weight: 600; cursor: pointer; text-align: left; border-radius: var(--radius-sm); display: none; }
+.admin-menu-btn:hover { background: var(--sea-pale); }
+
+/* ── 대기 / 거절 화면 ── */
+#pending-screen, #rejected-screen {
+  position: fixed; inset: 0; background: var(--sea);
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 998; padding: 2rem; text-align: center;
+}
+.status-icon { font-size: 56px; margin-bottom: 16px; }
+.status-title { font-size: 24px; font-weight: 700; color: white; margin-bottom: 6px; }
+.status-sub { font-size: 14px; color: rgba(255,255,255,.65); margin-bottom: 48px; line-height: 1.6; }
+.status-btn {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,.15); color: white;
+  border: 1.5px solid rgba(255,255,255,.35); border-radius: var(--radius);
+  padding: 14px 24px; font-size: 16px; font-weight: 600;
+  cursor: pointer; width: 100%; max-width: 300px; justify-content: center;
+}
+
+/* ── 관리자 패널 ── */
+#admin-panel {
+  position: fixed; inset: 0; background: var(--sand);
+  z-index: 500; overflow-y: auto; display: none;
+}
+.admin-header {
+  background: var(--sea); color: white;
+  padding: 52px 16px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0;
+}
+.admin-title { font-size: 18px; font-weight: 700; }
+.admin-close-btn {
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(255,255,255,.35); background: transparent;
+  color: white; font-size: 14px; cursor: pointer; font-weight: 600;
+}
+.admin-body { padding: 16px; }
+.admin-section-title { font-size: 11px; font-weight: 700; color: var(--rock); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+.admin-user-card { background: var(--white); border: 1px solid var(--pebble); border-radius: var(--radius); padding: 14px; margin-bottom: 8px; }
+.admin-user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.admin-user-photo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.admin-user-photo-ph { width: 36px; height: 36px; border-radius: 50%; background: var(--pebble); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.admin-user-name { font-size: 15px; font-weight: 600; color: var(--dark); }
+.admin-user-email { font-size: 12px; color: var(--rock); margin-top: 1px; }
+.admin-user-date { font-size: 11px; color: var(--rock); margin-top: 2px; }
+.admin-actions { display: flex; gap: 8px; }
+.approve-btn { flex: 1; padding: 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--success); background: var(--success-bg); color: var(--success); font-size: 14px; font-weight: 700; cursor: pointer; }
+.reject-btn { flex: 1; padding: 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--danger); background: var(--danger-bg); color: var(--danger); font-size: 14px; font-weight: 700; cursor: pointer; }
+.admin-empty { text-align: center; padding: 3rem 1rem; color: var(--rock); font-size: 15px; }
+.admin-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; border-radius: 100px; background: var(--danger); color: white; font-size: 10px; font-weight: 700; padding: 0 4px; margin-left: 4px; }
 </style>
 </head>
 <body>
@@ -215,9 +267,38 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
   </button>
 </div>
 
+<!-- 승인 대기 화면 -->
+<div id="pending-screen">
+  <div class="status-icon">⏳</div>
+  <div class="status-title">승인 대기 중</div>
+  <div class="status-sub">관리자 승인 후 이용하실 수 있습니다.<br>승인이 완료되면 다시 로그인해 주세요.</div>
+  <button class="status-btn" onclick="signOutUser()">↩ 로그아웃</button>
+</div>
+
+<!-- 거절 화면 -->
+<div id="rejected-screen">
+  <div class="status-icon">🚫</div>
+  <div class="status-title">접근이 거절되었습니다</div>
+  <div class="status-sub">관리자에 의해 접근이 거절되었습니다.<br>문의가 필요하시면 관리자에게 연락해 주세요.</div>
+  <button class="status-btn" onclick="signOutUser()">↩ 로그아웃</button>
+</div>
+
+<!-- 관리자 패널 -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <div class="admin-title">⚙️ 사용자 관리</div>
+    <button class="admin-close-btn" onclick="closeAdminPanel()">✕ 닫기</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-section-title">승인 대기 중인 사용자</div>
+    <div id="admin-panel-body"><div class="admin-empty">불러오는 중...</div></div>
+  </div>
+</div>
+
 <!-- 유저 팝업 -->
 <div class="user-popup" id="user-popup">
   <div class="user-popup-name" id="popup-name"></div>
+  <button class="admin-menu-btn" id="admin-menu-btn" onclick="openAdminPanel()">⚙️ 사용자 관리</button>
   <button class="logout-btn" onclick="signOutUser()">🚪 로그아웃</button>
 </div>
 
@@ -294,7 +375,7 @@ html, body { height: 100%; background: var(--sand); font-family: -apple-system, 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc }
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, getDocs, query, where }
   from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -313,7 +394,18 @@ const db = getFirestore(app);
 
 // ── 전역 노출 ──────────────────────────────
 let currentUser = null;
+let currentUserRole = null;
 let saveTimer = null;
+
+function showStatusScreen(status) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('pending-screen').style.display = status === 'pending' ? 'flex' : 'none';
+  document.getElementById('rejected-screen').style.display = status === 'rejected' ? 'flex' : 'none';
+}
+function hideStatusScreens() {
+  document.getElementById('pending-screen').style.display = 'none';
+  document.getElementById('rejected-screen').style.display = 'none';
+}
 
 window.signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
@@ -324,6 +416,7 @@ window.signOutUser = async () => {
   if(!confirm('로그아웃 하시겠어요?')) return;
   await signOut(auth);
   toggleUserPopup(true);
+  hideStatusScreens();
 };
 window.toggleUserPopup = (forceClose) => {
   const popup = document.getElementById('user-popup');
@@ -355,7 +448,7 @@ async function saveToFirestore() {
       custom: serializeCustom(),
       updatedAt: new Date().toISOString()
     };
-    await setDoc(doc(db, 'users', currentUser.uid), data);
+    await setDoc(doc(db, 'users', currentUser.uid), data, { merge: true });
     setSaveStatus('saved');
     setTimeout(()=>setSaveStatus('idle'), 2000);
   } catch(e) {
@@ -397,7 +490,36 @@ onAuthStateChanged(auth, async (user) => {
   const loginScreen = document.getElementById('login-screen');
   if(user) {
     currentUser = user;
+    const userRef = doc(db, 'users', user.uid);
+    const userSnap = await getDoc(userRef);
+
+    if(!userSnap.exists()) {
+      // 신규 사용자 — pending 상태로 등록
+      await setDoc(userRef, {
+        email: user.email,
+        name: user.displayName || '',
+        photoURL: user.photoURL || '',
+        status: 'pending',
+        role: 'user',
+        createdAt: new Date().toISOString(),
+        approvedAt: null
+      });
+      showStatusScreen('pending');
+      return;
+    }
+
+    const ud = userSnap.data();
+
+    if(ud.status !== 'approved') {
+      showStatusScreen(ud.status || 'pending');
+      return;
+    }
+
+    // 승인된 사용자
+    currentUserRole = ud.role || 'user';
+    hideStatusScreens();
     loginScreen.style.display = 'none';
+
     // 유저 정보 표시
     const avatar = document.getElementById('user-avatar');
     const avatarPh = document.getElementById('user-avatar-ph');
@@ -410,15 +532,99 @@ onAuthStateChanged(auth, async (user) => {
     const firstName = (user.displayName || '').split(' ')[0];
     nameLabel.textContent = firstName || user.email;
     popupName.textContent = user.displayName || user.email;
-    // Firestore에서 데이터 로드
+
+    // 관리자 버튼 표시
+    if(currentUserRole === 'admin') {
+      document.getElementById('admin-menu-btn').style.display = 'block';
+    }
+
+    // Firestore에서 체크리스트 데이터 로드
     await loadFromFirestore();
     syncUI();
     render();
   } else {
     currentUser = null;
+    currentUserRole = null;
+    hideStatusScreens();
     loginScreen.style.display = 'flex';
   }
 });
+
+// ── 관리자 패널 ───────────────────────────
+window.openAdminPanel = async () => {
+  toggleUserPopup(true);
+  document.getElementById('admin-panel').style.display = 'block';
+  await loadAdminPanel();
+};
+window.closeAdminPanel = () => {
+  document.getElementById('admin-panel').style.display = 'none';
+};
+
+async function loadAdminPanel() {
+  const body = document.getElementById('admin-panel-body');
+  body.innerHTML = '<div class="admin-empty">불러오는 중...</div>';
+  try {
+    const q = query(collection(db, 'users'), where('status', '==', 'pending'));
+    const snap = await getDocs(q);
+    if(snap.empty) {
+      body.innerHTML = '<div class="admin-empty">⏳ 대기 중인 사용자가 없습니다</div>';
+      return;
+    }
+    body.innerHTML = '';
+    snap.forEach(docSnap => {
+      const u = docSnap.data();
+      const uid = docSnap.id;
+      const date = u.createdAt ? new Date(u.createdAt).toLocaleDateString('ko-KR') : '알 수 없음';
+      const card = document.createElement('div');
+      card.className = 'admin-user-card';
+      const photoHtml = u.photoURL
+        ? `<img class="admin-user-photo" src="${u.photoURL}">`
+        : `<div class="admin-user-photo-ph">👤</div>`;
+      card.innerHTML = `
+        <div class="admin-user-info">
+          ${photoHtml}
+          <div>
+            <div class="admin-user-name">${u.name || '이름 없음'}</div>
+            <div class="admin-user-email">${u.email || ''}</div>
+            <div class="admin-user-date">가입: ${date}</div>
+          </div>
+        </div>
+        <div class="admin-actions">
+          <button class="approve-btn" onclick="approveUser('${uid}')">✓ 승인</button>
+          <button class="reject-btn" onclick="rejectUser('${uid}')">✕ 거절</button>
+        </div>`;
+      body.appendChild(card);
+    });
+  } catch(e) {
+    body.innerHTML = '<div class="admin-empty" style="color:var(--danger)">불러오기 실패</div>';
+    console.error('관리자 패널 로드 실패:', e);
+  }
+}
+
+window.approveUser = async (uid) => {
+  try {
+    await updateDoc(doc(db, 'users', uid), {
+      status: 'approved',
+      approvedAt: new Date().toISOString()
+    });
+    await loadAdminPanel();
+  } catch(e) {
+    alert('승인 실패: ' + e.message);
+  }
+};
+
+window.rejectUser = async (uid) => {
+  if(!confirm('정말 거절하시겠어요?')) return;
+  try {
+    await updateDoc(doc(db, 'users', uid), {
+      status: 'rejected',
+      rejectedAt: new Date().toISOString()
+    });
+    await loadAdminPanel();
+  } catch(e) {
+    alert('거절 실패: ' + e.message);
+  }
+};
 
 function serializeCustom() {
   const out = {};
