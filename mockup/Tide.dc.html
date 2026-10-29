@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>물때 날씨</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FFFFFF; display: flex; flex-direction: column; overflow: hidden">
+  <header style="padding: 24px 20px 0; display: flex; justify-content: space-between; align-items: center">
+    <button style="min-height: 44px; border: 0; background: none; padding: 0; display: flex; align-items: center; gap: 6px; font-family: inherit; font-size: 24px; font-weight: 600; letter-spacing: -0.6px; color: #111111">전곡항
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; color: #5E5E5E">TUE OCT 28</span>
+  </header>
+  <div role="tablist" aria-label="바다 정보" style="display: flex; gap: 18px; padding: 0 20px; border-bottom: 1px solid #E8E8E8">
+    <a role="tab" aria-selected="true" href="Tide.dc.html" style="min-height: 42px; display: flex; align-items: center; border-bottom: 2px solid #111111; margin-bottom: -1px; text-decoration: none; color: #111111; font-size: 15px; font-weight: 600">물때·날씨</a>
+    <a role="tab" aria-selected="false" href="FishMap.dc.html" style="min-height: 42px; display: flex; align-items: center; text-decoration: none; color: #5E5E5E; font-size: 15px">낚시 지도</a>
+    <a role="tab" aria-selected="false" href="SeasonCal.dc.html" style="min-height: 42px; display: flex; align-items: center; text-decoration: none; color: #5E5E5E; font-size: 15px">이번 달 어종</a>
+  </div>
+
+  <main style="flex: 1; overflow: hidden; padding: 12px 20px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.4px">바다향 기준 <span style="color: #111111">오전 출항 OK</span></span>
+        <span style="font-size: 12px; color: #5E5E5E; text-decoration: underline">기준 설정</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 2px">
+        <sc-for list="{{window}}" as="w" hint-placeholder-count="8">
+          <div style="display: flex; flex-direction: column; gap: 3px; align-items: center">
+            <span style="width: 100%; height: 8px; background: {{w.color}}"></span>
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 10.5px; color: #5E5E5E">{{w.t}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-size: 12px; color: #5E5E5E">내 기준: 풍속 8 m/s · 파고 1.0 m 이하 · <span style="color: #C23B0E; font-weight: 600">18시부터 기준 초과</span></span>
+    </div>
+
+    <div style="border-top: 1px solid #111111; padding-top: 10px; display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline">
+        <span style="font-size: 15px; font-weight: 600">조금 <span style="font-weight: 400; color: #5E5E5E">· 서해 7물때 · 물 흐름 약함</span></span>
+        <span style="font-size: 12px; color: #5E5E5E">사리까지 7일</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); gap: 2px; align-items: end; height: 30px">
+        <sc-for list="{{cycle}}" as="c" hint-placeholder-count="15">
+          <span style="height: {{c.h}}; background: {{c.color}}"></span>
+        </sc-for>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 11px; color: #5E5E5E"><span>사리</span><span>오늘 · 조금</span><span>사리</span></div>
+    </div>
+
+    <div style="display: flex; flex-direction: column">
+      <div style="display: flex; align-items: baseline; gap: 8px">
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -1px">312</span><span style="font-family: 'DM Sans', sans-serif; font-size: 13px; color: #5E5E5E">cm</span><span style="font-size: 14px; font-weight: 600">들물 중 · 중들물</span>
+      </div>
+      <svg width="350" height="96" viewBox="0 0 350 96" role="img" aria-label="오늘 조석: 만조 05:42, 간조 11:58, 만조 18:10, 지금 14:20" style="display: block">
+        <line x1="0" y1="78" x2="350" y2="78" stroke="#E8E8E8"/>
+        <path d="M0 66 C 36 66, 54 12, 90 12 S 144 72, 170 72 S 225 16, 260 16 S 322 64, 350 64" fill="none" stroke="#111111" stroke-width="2"/>
+        <line x1="208" y1="2" x2="208" y2="78" stroke="#F2541B" stroke-width="1.5"/>
+        <circle cx="208" cy="42" r="4.5" fill="#F2541B" stroke="#FFFFFF" stroke-width="2"/>
+        <text x="90" y="92" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="11" font-weight="600" fill="#111111">05:42 ▲</text>
+        <text x="170" y="92" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="11" font-weight="600" fill="#111111">11:58 ▼</text>
+        <text x="260" y="92" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="11" font-weight="600" fill="#111111">18:10 ▲</text>
+      </svg>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid #111111">
+      <sc-for list="{{hours}}" as="h" hint-placeholder-count="5">
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 8px 0 6px; border-bottom: 3px solid {{h.flag}}">
+          <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: #5E5E5E">{{h.t}}</span>
+          <span style="font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 600">{{h.wind}}</span>
+          <span style="font-size: 11px; color: #5E5E5E">{{h.dir}} · {{h.wave}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr">
+      <div style="display: flex; flex-direction: column; gap: 2px; padding-right: 10px; border-right: 1px solid #E8E8E8">
+        <span style="font-size: 12px; color: #5E5E5E">수온 · 7일</span>
+        <div style="display: flex; align-items: center; gap: 6px">
+          <span style="font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 600">17.8°</span>
+          <svg width="52" height="20" viewBox="0 0 52 20" role="img" aria-label="수온 7일 추이: 18.6도에서 17.8도로 하강"><polyline points="0,4 8,5 16,7 24,9 32,12 40,14 52,16" fill="none" stroke="#111111" stroke-width="1.5"/></svg>
+        </div>
+        <span style="font-size: 11px; color: #5E5E5E">일주일 −0.8°C</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2px; padding: 0 10px; border-right: 1px solid #E8E8E8">
+        <span style="font-size: 12px; color: #5E5E5E">일출·일몰</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600">06:52</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600">17:41</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 10px">
+        <span style="font-size: 12px; color: #5E5E5E">달</span>
+        <span style="font-size: 15px; font-weight: 600">하현</span>
+        <span style="font-size: 11px; color: #5E5E5E">월출 00:41</span>
+      </div>
+    </div>
+  </main>
+
+  <nav aria-label="하단 메뉴" style="display: flex; border-top: 1px solid #E8E8E8; background: #FFFFFF; padding: 0 8px 18px">
+    <a href="Main.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #5E5E5E; font-size: 14px; font-weight: 500"><span style="width: 4px; height: 4px"></span>홈</a>
+    <a href="Tide.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #111111; font-size: 14px; font-weight: 700"><span style="width: 4px; height: 4px; border-radius: 2px; background: #F2541B"></span>바다</a>
+    <a href="MyBoat.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #5E5E5E; font-size: 14px; font-weight: 500"><span style="width: 4px; height: 4px"></span>내 배</a>
+    <a href="Collection.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #5E5E5E; font-size: 14px; font-weight: 500"><span style="width: 4px; height: 4px"></span>컬렉션</a>
+    <a href="CatchInsights.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #5E5E5E; font-size: 14px; font-weight: 500"><span style="width: 4px; height: 4px"></span>조과</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const hrs = ['06', '09', '12', '15', '18', '21', '24', '03'];
+    const ok = [true, true, true, true, false, false, false, true];
+    const strength = [10, 9, 8, 6, 5, 4, 3, 2, 3, 4, 6, 7, 8, 9, 10];
+    return {
+      window: hrs.map((t, i) => ({ t, color: ok[i] ? '#111111' : '#F2541B' })),
+      cycle: strength.map((s, i) => ({
+        h: Math.round(6 + s * 2.4) + 'px',
+        color: i === 7 ? '#F2541B' : (i < 7 ? '#CFCFCF' : '#111111')
+      })),
+      hours: [
+        { t: 'NOW', wind: '4.0', dir: '북서', wave: '0.5m', flag: '#E8E8E8' },
+        { t: '15', wind: '5.2', dir: '북서', wave: '0.5m', flag: '#E8E8E8' },
+        { t: '18', wind: '8.1', dir: '북', wave: '1.0m', flag: '#F2541B' },
+        { t: '21', wind: '8.4', dir: '북', wave: '1.5m', flag: '#F2541B' },
+        { t: '24', wind: '6.3', dir: '북', wave: '1.0m', flag: '#F2541B' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

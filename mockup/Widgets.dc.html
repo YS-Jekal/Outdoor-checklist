@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>위젯</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 940px; height: 844px; box-sizing: border-box; background: #FFFFFF; padding: 32px 36px; display: flex; flex-direction: column; gap: 22px">
+  <div style="display: flex; justify-content: space-between; align-items: flex-end">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; color: #5E5E5E">WIDGETS</span>
+      <h1 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.8px">앱을 열지 않고, 한 번에 캐치</h1>
+    </div>
+    <span style="font-size: 13px; color: #5E5E5E">잠금화면의 "캐치"를 눌러 보세요</span>
+  </div>
+
+  <div style="display: flex; gap: 36px; align-items: flex-start">
+    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center">
+      <div style="position: relative; width: 300px; height: 620px; border-radius: 40px; overflow: hidden; border: 8px solid #111111; box-sizing: border-box">
+        <img src="img/welcome.jpg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+        <div style="position: absolute; inset: 0; background: rgba(10,20,26,0.35)"></div>
+        <div style="position: relative; display: flex; flex-direction: column; align-items: center; padding-top: 64px; color: #FFFFFF; gap: 10px">
+          <span style="font-size: 13px; font-weight: 600">10월 28일 화요일 · 전곡항 북서 4 m/s</span>
+          <span style="font-family: 'DM Sans', sans-serif; font-size: 76px; font-weight: 600; letter-spacing: -2px; line-height: 1">14:22</span>
+          <div style="display: flex; gap: 10px; margin-top: 6px">
+            <button onClick="{{catchNow}}" aria-label="포인트 캐치" style="width: 68px; height: 68px; border-radius: 34px; border: 0; background: rgba(255,255,255,0.22); color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-family: inherit">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3"/></svg>
+              <span style="font-size: 11px; font-weight: 700">캐치</span>
+            </button>
+            <div style="width: 150px; height: 68px; border-radius: 18px; background: rgba(255,255,255,0.22); padding: 10px 12px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 2px">
+              <span style="font-size: 13px; font-weight: 700">중들물 · 312 cm ↑</span>
+              <span style="font-family: 'DM Sans', sans-serif; font-size: 12px">만조 18:10 · 조금</span>
+            </div>
+          </div>
+        </div>
+        <sc-if value="{{saved}}" hint-placeholder-val="{{ false }}">
+          <div style="position: absolute; left: 12px; right: 12px; bottom: 28px; background: #FFFFFF; border-radius: 16px; padding: 12px 14px; display: flex; gap: 10px; align-items: center">
+            <span style="width: 28px; height: 28px; border-radius: 14px; background: #F2541B; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>
+            </span>
+            <span style="display: flex; flex-direction: column; gap: 1px">
+              <span style="font-size: 13px; font-weight: 700">포인트 저장됨 · 포인트 10.28-1</span>
+              <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #5E5E5E">37°11.42′N · 126°31.08′E · 중들물</span>
+            </span>
+          </div>
+        </sc-if>
+      </div>
+      <span style="font-size: 14px; font-weight: 600">잠금화면</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center">
+      <div style="width: 300px; height: 620px; border-radius: 40px; overflow: hidden; border: 8px solid #111111; box-sizing: border-box; background: #DCE4E7; padding: 54px 18px 18px; display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #FFFFFF; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline">
+            <span style="font-size: 12px; font-weight: 700">나만의바다</span>
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #5E5E5E">캐치 3곳</span>
+          </div>
+          <button onClick="{{catchNow}}" style="min-height: 56px; border: 0; border-radius: 14px; background: #F2541B; color: #111111; font-family: inherit; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>포인트 캐치
+          </button>
+          <span style="font-size: 12px; color: #5E5E5E">최근 · 포인트 10.26-2 · 광어 · ○○호</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <div style="background: #FFFFFF; border-radius: 22px; padding: 12px; display: flex; flex-direction: column; gap: 4px; height: 120px; box-sizing: border-box">
+            <span style="font-size: 11px; color: #5E5E5E">전곡항 물때</span>
+            <span style="font-size: 15px; font-weight: 700">중들물</span>
+            <svg width="100" height="34" viewBox="0 0 100 34" aria-hidden="true"><path d="M0 26 C 14 26, 20 4, 34 4 S 52 30, 62 30 S 82 6, 100 8" fill="none" stroke="#111111" stroke-width="1.8"/><circle cx="70" cy="22" r="3.5" fill="#F2541B"/></svg>
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 11px; color: #5E5E5E">만조 18:10</span>
+          </div>
+          <div style="background: #111111; color: #FFFFFF; border-radius: 22px; padding: 12px; display: flex; flex-direction: column; gap: 4px; height: 120px; box-sizing: border-box">
+            <span style="font-size: 11px; color: #CFCFCF">바다향 기준</span>
+            <span style="font-size: 15px; font-weight: 700">오전 출항 OK</span>
+            <span style="font-size: 11px; color: #F2541B; font-weight: 600; margin-top: auto">18시부터 풍속 초과</span>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 6px 6px 0">
+          <span style="aspect-ratio: 1; border-radius: 14px; background: #C7D1D4"></span><span style="aspect-ratio: 1; border-radius: 14px; background: #C7D1D4"></span><span style="aspect-ratio: 1; border-radius: 14px; background: #C7D1D4"></span><span style="aspect-ratio: 1; border-radius: 14px; background: #C7D1D4"></span>
+          <span style="aspect-ratio: 1; border-radius: 14px; background: #C7D1D4"></span><span style="aspect-ratio: 1; border-radius: 14px; background: #C7D1D4"></span><span style="aspect-ratio: 1; border-radius: 14px; background: #C7D1D4"></span><span style="aspect-ratio: 1; border-radius: 14px; background: #C7D1D4"></span>
+        </div>
+      </div>
+      <span style="font-size: 14px; font-weight: 600">홈 화면</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center; padding-top: 140px">
+      <div style="width: 200px; height: 200px; border-radius: 100px; background: #111111; border: 8px solid #3A3A3A; box-sizing: border-box; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 28px; font-weight: 600">14:22</span>
+        <span style="font-size: 11px; color: #CFCFCF">중들물 · 312 cm</span>
+        <button onClick="{{catchNow}}" aria-label="워치에서 포인트 캐치" style="width: 64px; height: 64px; border-radius: 32px; border: 0; background: #F2541B; color: #111111; font-family: inherit; font-size: 13px; font-weight: 700">캐치</button>
+      </div>
+      <span style="font-size: 14px; font-weight: 600">스마트워치</span>
+      <span style="width: 200px; font-size: 12px; line-height: 1.5; color: #5E5E5E; text-align: center">폰을 꺼내기 어려울 때 손목에서 한 번. 폰과 저장 위치가 동기화돼요.</span>
+    </div>
+  </div>
+
+  <p style="margin: auto 0 0; font-size: 12px; line-height: 1.6; color: #5E5E5E">iOS는 잠금화면 위젯·제어 센터·동작 버튼, Android는 잠금화면 바로가기·홈 화면 위젯에서 실행해요. OS에 따라 위치 확인을 위해 앱이 잠깐 열렸다 닫힐 수 있어요. 친구배를 타셨을 때는, 선주님께 먼저 양해를 구하세요.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":940,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { saved: false };
+  }
+  renderVals() {
+    return {
+      saved: this.state.saved,
+      catchNow: () => this.setState({ saved: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

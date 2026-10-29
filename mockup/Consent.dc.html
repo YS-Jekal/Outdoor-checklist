@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>소식 받기 동의</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FFFFFF; display: flex; flex-direction: column; overflow: hidden">
+  <div style="position: relative; flex-shrink: 0">
+    <img src="img/sport.jpg" alt="마리나에 나란히 정박한 스포츠 보트" style="width: 100%; height: 180px; object-fit: cover; display: block">
+    <a href="DreamSurvey.dc.html" aria-label="뒤로" style="position: absolute; left: 8px; top: 24px; width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #111111">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+  </div>
+
+  <main style="flex: 1; padding: 20px 20px 0; display: flex; flex-direction: column; overflow: hidden">
+    <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; color: #5E5E5E">DREAM BOAT ALERTS</span>
+    <h1 style="margin: 10px 0 14px; font-size: 26px; line-height: 1.3; font-weight: 600; letter-spacing: -0.7px">내 꿈의 보트 소식,<br>먼저 받아 보실래요?</h1>
+
+    <div style="border-top: 1px solid #111111">
+      <div style="display: flex; gap: 14px; padding: 11px 0; border-bottom: 1px solid #E8E8E8; font-size: 15px"><span style="font-family: 'DM Sans', sans-serif; font-weight: 600; color: #5E5E5E; width: 20px">01</span>답과 비슷한 매물이 나오면</div>
+      <div style="display: flex; gap: 14px; padding: 11px 0; border-bottom: 1px solid #E8E8E8; font-size: 15px"><span style="font-family: 'DM Sans', sans-serif; font-weight: 600; color: #5E5E5E; width: 20px">02</span>시승회·보트쇼 초대</div>
+      <div style="display: flex; gap: 14px; padding: 11px 0; border-bottom: 1px solid #E8E8E8; font-size: 15px"><span style="font-family: 'DM Sans', sans-serif; font-weight: 600; color: #5E5E5E; width: 20px">03</span>조종면허·렌탈 혜택</div>
+    </div>
+
+    <div style="margin-top: 18px; display: flex; flex-direction: column">
+      <div style="display: flex; align-items: center; gap: 12px; min-height: 56px">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 15px; font-weight: 600">[선택] 광고성 정보 앱 알림 받기</span>
+          <span style="font-size: 13px; color: #5E5E5E">위 소식을 앱 푸시로 보내요</span>
+        </div>
+        <button role="switch" aria-checked="{{pushOn}}" aria-label="광고성 정보 앱 알림 받기" onClick="{{togglePush}}" style="width: 52px; height: 44px; border: 0; background: none; padding: 0; display: flex; align-items: center; justify-content: center">
+          <span style="width: 48px; height: 28px; border-radius: 14px; background: {{pushTrack}}; position: relative; display: block"><span style="position: absolute; top: 3px; left: {{pushKnob}}; width: 22px; height: 22px; border-radius: 11px; background: #FFFFFF"></span></span>
+        </button>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; min-height: 56px; border-top: 1px solid #F0F0F0; opacity: {{nightOpacity}}">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 15px; font-weight: 600">[선택] 밤 9시 ~ 아침 8시에도 받기</span>
+          <span style="font-size: 13px; color: #5E5E5E">끄면 그 시간에는 보내지 않아요</span>
+        </div>
+        <button role="switch" aria-checked="{{nightOn}}" aria-label="야간 알림 받기" onClick="{{toggleNight}}" style="width: 52px; height: 44px; border: 0; background: none; padding: 0; display: flex; align-items: center; justify-content: center">
+          <span style="width: 48px; height: 28px; border-radius: 14px; background: {{nightTrack}}; position: relative; display: block"><span style="position: absolute; top: 3px; left: {{nightKnob}}; width: 22px; height: 22px; border-radius: 11px; background: #FFFFFF"></span></span>
+        </button>
+      </div>
+    </div>
+
+    <p style="margin: 10px 0 0; font-size: 13px; line-height: 1.55; color: #5E5E5E">딜러·면허학원 상담은 신청할 때마다 받는 곳을 보여드리고 따로 동의를 받아요. 동의하지 않아도 모든 기능을 쓸 수 있고, 설정에서 언제든 바꿀 수 있어요.</p>
+  </main>
+
+  <footer style="padding: 12px 20px 30px; display: flex; flex-direction: column; gap: 4px">
+    <a href="HomeDreamer.dc.html" style="min-height: 54px; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">{{cta}}</a>
+    <a href="HomeDreamer.dc.html" style="min-height: 44px; font-size: 14px; color: #5E5E5E; text-decoration: none; display: flex; align-items: center; justify-content: center">다음에 할게요</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { push: true, night: false };
+  }
+  renderVals() {
+    const { push, night } = this.state;
+    const nightActive = push && night;
+    return {
+      pushOn: push ? 'true' : 'false',
+      pushTrack: push ? '#111111' : '#CFCFCF',
+      pushKnob: push ? '23px' : '3px',
+      togglePush: () => this.setState({ push: !push, night: push ? false : night }),
+      nightOn: nightActive ? 'true' : 'false',
+      nightTrack: nightActive ? '#111111' : '#CFCFCF',
+      nightKnob: nightActive ? '23px' : '3px',
+      nightOpacity: push ? 1 : 0.45,
+      toggleNight: () => { if (push) this.setState({ night: !night }); },
+      cta: push ? '동의하고 시작하기' : '알림 없이 시작하기'
+    };
+  }
+}
+</script>
+</body>
+</html>

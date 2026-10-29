@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>출조 준비물</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FFFFFF; display: flex; flex-direction: column; overflow: hidden">
+  <header style="padding: 24px 8px 0; display: flex; align-items: center; justify-content: space-between">
+    <a href="TripPlan.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #111111">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+    <span style="padding-right: 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700">{{done}} / {{total}}</span>
+  </header>
+
+  <div style="padding: 0 20px">
+    <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; color: #5E5E5E">CHECKLIST · 덕적도 왕복</span>
+    <h1 style="margin: 4px 0 8px; font-size: 24px; font-weight: 600; letter-spacing: -0.6px">출조 준비물</h1>
+    <div style="height: 3px; background: #E8E8E8"><div style="height: 3px; width: {{pct}}; background: #F2541B"></div></div>
+  </div>
+
+  <section style="padding: 8px 20px 6px; display: flex; flex-direction: column; gap: 5px; border-bottom: 1px solid #111111">
+    <sc-for list="{{conds}}" as="c" hint-placeholder-count="5">
+      <div style="display: flex; align-items: center; gap: 8px">
+        <span style="width: 48px; flex-shrink: 0; font-size: 12px; color: #5E5E5E">{{c.title}}</span>
+        <div style="display: flex; gap: 4px; flex-wrap: wrap">
+          <sc-for list="{{c.opts}}" as="o" hint-placeholder-count="3">
+            <button onClick="{{o.pick}}" aria-pressed="{{o.sel}}" style="min-height: 34px; padding: 0 10px; border-radius: 17px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.fg}}; font-family: inherit; font-size: 13px; font-weight: 500">{{o.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+
+  <main style="flex: 1; overflow-y: auto; padding: 0 20px">
+    <sc-for list="{{items}}" as="it" hint-placeholder-count="8">
+      <button onClick="{{it.toggle}}" role="checkbox" aria-checked="{{it.checked}}" style="width: 100%; min-height: 48px; padding: 6px 0; border: 0; border-bottom: 1px solid #E8E8E8; background: none; font-family: inherit; display: flex; align-items: center; gap: 12px; text-align: left; color: #111111">
+        <span style="width: 22px; height: 22px; flex-shrink: 0; border: 1.5px solid #111111; background: {{it.box}}; display: flex; align-items: center; justify-content: center; box-sizing: border-box">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>
+        </span>
+        <span style="flex: 1; display: flex; flex-direction: column; gap: 1px">
+          <span style="font-size: 15px; font-weight: 500; text-decoration: {{it.strike}}; color: {{it.fg}}">{{it.label}}</span>
+          <span style="font-size: 11px; color: #5E5E5E">{{it.note}}</span>
+        </span>
+        <span style="font-size: 11px; font-weight: 600; padding: 2px 6px; background: {{it.tagBg}}; color: {{it.tagFg}}">{{it.tag}}</span>
+      </button>
+    </sc-for>
+    <button style="width: 100%; min-height: 44px; border: 0; background: none; font-family: inherit; font-size: 14px; color: #5E5E5E; text-decoration: underline; text-align: left">+ 직접 추가 · 다음 출조에도 기억해요</button>
+  </main>
+
+  <footer style="padding: 10px 20px 28px; border-top: 1px solid #E8E8E8">
+    <a href="TripLive.dc.html" style="min-height: 54px; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">준비 끝 · 출항하기</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fish: '광어·우럭', place: '선상', women: true, kids: false, stay: '당일', time: '주간',
+      checked: ['구명조끼 4벌', '아이스박스·얼음', '광어·우럭 채비']
+    };
+  }
+  opt(labels, key) {
+    return labels.map((label) => {
+      const on = this.state[key] === label;
+      return { label, sel: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', border: on ? '#111111' : '#CFCFCF', pick: () => this.setState({ [key]: label }) };
+    });
+  }
+  toggleOpt(label, key) {
+    const on = this.state[key];
+    return { label, sel: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', border: on ? '#111111' : '#CFCFCF', pick: () => this.setState({ [key]: !on }) };
+  }
+  renderVals() {
+    const s = this.state;
+    const list = [];
+    const add = (label, note, tag) => list.push({ label, note, tag });
+    add('구명조끼 4벌', '동승 4명 기준' + (s.kids ? ' · 아동용 포함' : ''), '안전');
+    if (s.place === '선상') {
+      add('보조 연료 60 L', '출항 계획의 연료 계산 결과', '연료 계산');
+      add('VHF 무전기 충전', '', '안전');
+      add('멀미약', s.kids ? '어린이용 따로' : '출항 30분 전 복용', '선상');
+    }
+    if (s.place === '갯바위·도보') {
+      add('갯바위 신발 (스파이크)', '미끄럼 사고 예방', '갯바위');
+      add('물때 다시 확인', '들물 고립 주의 · 간조 시각 알림 켜기', '갯바위');
+    }
+    if (s.place === '좌대') {
+      add('좌대 예약·배 시간 확인', '들어가고 나오는 배 시간', '좌대');
+      add('방석·접이식 의자', '', '좌대');
+    }
+    if (s.fish === '광어·우럭') { add('광어·우럭 채비', '다운샷 · 봉돌 여유분', '어종'); add('뜰채', '', '어종'); }
+    if (s.fish === '쭈꾸미·갑오징어') { add('에기·애자 여유분', '밑걸림 대비 넉넉히', '어종'); add('집게·장갑', '', '어종'); }
+    if (s.fish === '기타') add('채비 (직접 입력)', '', '어종');
+    add('아이스박스·얼음', '', '기본');
+    add('물·간식', '', '기본');
+    add('휴대폰 방수팩·보조배터리', '', '기본');
+    if (s.women) { add('화장실 대책', '배 화장실 확인 · 휴대용 변기', '동반자'); add('담요·여벌 겉옷', '', '동반자'); }
+    if (s.kids) { add('아동용 구명조끼', '체중에 맞는 크기', '어린이'); add('어린이 간식·놀거리', '', '어린이'); }
+    if (s.time === '주간') add('선크림·모자·선글라스', '', '주간');
+    if (s.time === '야간') { add('헤드랜턴·예비 배터리', '', '야간'); add('방한복', '밤바다는 체감온도가 낮아요', '야간'); add('케미라이트', '', '야간'); }
+    if (s.stay === '1박') { add('침낭·방한 장비', '', '1박'); add('식사·식수 하루치 추가', '', '1박'); add('여벌옷·세면도구', '', '1박'); if (s.time !== '야간') add('랜턴', '', '1박'); }
+    const auto = { '연료 계산': true, '야간': true, '1박': true, '어린이': true, '동반자': true };
+    const items = list.map((it) => {
+      const on = s.checked.includes(it.label);
+      return {
+        label: it.label,
+        note: it.note,
+        tag: it.tag,
+        tagBg: auto[it.tag] ? '#FFF1EB' : '#F4F5F6',
+        tagFg: auto[it.tag] ? '#A3330B' : '#5E5E5E',
+        checked: on ? 'true' : 'false',
+        box: on ? '#111111' : '#FFFFFF',
+        strike: on ? 'line-through' : 'none',
+        fg: on ? '#5E5E5E' : '#111111',
+        toggle: () => this.setState({ checked: on ? s.checked.filter((x) => x !== it.label) : s.checked.concat([it.label]) })
+      };
+    });
+    const done = items.filter((i) => i.checked === 'true').length;
+    return {
+      conds: [
+        { title: '어종', opts: this.opt(['광어·우럭', '쭈꾸미·갑오징어', '기타'], 'fish') },
+        { title: '장소', opts: this.opt(['선상', '갯바위·도보', '좌대'], 'place') },
+        { title: '동반자', opts: [this.toggleOpt('여성 동반', 'women'), this.toggleOpt('어린이 동반', 'kids')] },
+        { title: '일정', opts: this.opt(['당일', '1박'], 'stay') },
+        { title: '시간대', opts: this.opt(['주간', '야간'], 'time') }
+      ],
+      items,
+      done,
+      total: items.length,
+      pct: Math.round((done / items.length) * 100) + '%'
+    };
+  }
+}
+</script>
+</body>
+</html>

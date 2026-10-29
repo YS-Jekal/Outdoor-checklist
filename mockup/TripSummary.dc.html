@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>오늘의 주행 요약</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FFFFFF; display: flex; flex-direction: column; overflow: hidden">
+  <header style="padding: 22px 8px 6px 20px; display: flex; justify-content: space-between; align-items: flex-start">
+    <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 6px">
+      <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; color: #5E5E5E">TRIP LOG · OCT 28</span>
+      <h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.6px">전곡항 → 3번 어초</h1>
+    </div>
+    <a href="Main.dc.html" aria-label="닫기" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #111111">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </a>
+  </header>
+
+  <svg width="390" height="132" viewBox="0 0 390 132" role="img" aria-label="오늘 항적: 전곡항 출발, 3번 어초 경유 후 귀항" style="display: block; background: #E4EBEE; flex-shrink: 0">
+    <path d="M0 0 H120 C 108 24, 80 44, 56 70 C 40 88, 16 104, 0 110 Z" fill="#F5F5F2" stroke="#CDD3D1"/>
+    <path d="M70 52 C 110 60, 150 80, 190 96 S 260 104, 300 70 S 250 30, 190 40 S 100 44, 70 52" fill="none" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="64" y="46" width="12" height="12" fill="#111111"/>
+    <circle cx="258" cy="96" r="5" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+  </svg>
+
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 20px; border-bottom: 1px solid #E8E8E8">
+    <sc-for list="{{stats}}" as="s" hint-placeholder-count="4">
+      <div style="padding: 10px 0; display: flex; flex-direction: column; gap: 1px">
+        <span style="font-size: 12px; color: #5E5E5E">{{s.k}}</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 19px; font-weight: 600">{{s.v}}<span style="font-size: 11px; color: #5E5E5E"> {{s.u}}</span></span>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="padding: 10px 20px 0; display: flex; flex-direction: column; gap: 6px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline">
+      <span style="font-size: 13px; color: #5E5E5E">자동 연결 · 사진 6 · 조과 광어 3, 우럭 5</span>
+      <a href="Catch.dc.html" style="font-size: 13px">조과 보기</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px">
+      <img src="img/fish.jpg" alt="" style="width: 100%; height: 58px; object-fit: cover; display: block">
+      <img src="img/welcome.jpg" alt="" style="width: 100%; height: 58px; object-fit: cover; display: block">
+      <img src="img/fishing.jpg" alt="" style="width: 100%; height: 58px; object-fit: cover; display: block">
+      <img src="img/myboat.jpg" alt="" style="width: 100%; height: 58px; object-fit: cover; display: block">
+    </div>
+  </div>
+
+  <section style="margin: 14px 20px 0; border-top: 1px solid #111111; padding-top: 10px; display: flex; flex-direction: column; gap: 8px">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <span style="font-size: 16px; font-weight: 600">주유량</span>
+      <div style="display: flex; align-items: center; gap: 6px">
+        <button onClick="{{minus}}" aria-label="주유량 5리터 줄이기" style="width: 44px; height: 44px; border-radius: 4px; border: 1px solid #CFCFCF; background: #FFFFFF; font-family: 'DM Sans', sans-serif; font-size: 20px; color: #111111">−</button>
+        <span style="min-width: 84px; text-align: center; font-family: 'DM Sans', sans-serif; font-size: 26px; font-weight: 600">{{fuel}}<span style="font-size: 13px; color: #5E5E5E"> L</span></span>
+        <button onClick="{{plus}}" aria-label="주유량 5리터 늘리기" style="width: 44px; height: 44px; border-radius: 4px; border: 1px solid #CFCFCF; background: #FFFFFF; font-family: 'DM Sans', sans-serif; font-size: 20px; color: #111111">+</button>
+      </div>
+    </div>
+    <button onClick="{{toggleFull}}" role="checkbox" aria-checked="{{fullOn}}" style="min-height: 40px; padding: 0; border: 0; background: none; font-family: inherit; font-size: 14px; color: #111111; display: flex; align-items: center; gap: 8px; text-align: left">
+      <span style="width: 20px; height: 20px; border: 1.5px solid #111111; background: {{fullBox}}; display: flex; align-items: center; justify-content: center; box-sizing: border-box; flex-shrink: 0">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>
+      </span>
+      가득 주유했어요 <span style="color: #5E5E5E">· 다음 가득 주유까지 연비가 정확해져요</span>
+    </button>
+    <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr; background: #F4F5F6">
+      <div style="padding: 10px 12px; display: flex; flex-direction: column; gap: 1px; border-right: 1px solid #E2E4E6">
+        <span style="font-size: 12px; color: #5E5E5E">연비</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 24px; font-weight: 600">{{kmpl}}<span style="font-size: 12px; color: #5E5E5E"> km/L</span></span>
+      </div>
+      <div style="padding: 10px 10px; display: flex; flex-direction: column; gap: 1px; border-right: 1px solid #E2E4E6">
+        <span style="font-size: 12px; color: #5E5E5E">시간당</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 600">{{lph}}<span style="font-size: 11px; color: #5E5E5E"> L/h</span></span>
+      </div>
+      <div style="padding: 10px 10px; display: flex; flex-direction: column; gap: 1px">
+        <span style="font-size: 12px; color: #5E5E5E">해리 기준</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 600">{{nmpl}}<span style="font-size: 11px; color: #5E5E5E"> NM/L</span></span>
+      </div>
+    </div>
+  </section>
+
+  <div style="margin: 10px 20px 0; padding: 10px 0; border-top: 1px solid #E8E8E8; border-bottom: 1px solid #E8E8E8; display: flex; justify-content: space-between; align-items: center; font-size: 14px">
+    <span>엔진 시간 <span style="font-family: 'DM Sans', sans-serif; font-weight: 600">412.0 → 416.2 h</span></span>
+    <span style="font-size: 13px; color: #5E5E5E">엔진오일 91.8시간 남음</span>
+  </div>
+
+  <footer style="margin-top: auto; padding: 12px 20px 30px">
+    <a href="Main.dc.html" style="min-height: 54px; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">주행 기록 저장</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { fuel: 86, full: true };
+  }
+  renderVals() {
+    const hours = 4.2;
+    const nm = 38.6;
+    const fuel = this.state.fuel;
+    const full = this.state.full;
+    return {
+      stats: [
+        { k: '운항', v: '4:12', u: '' },
+        { k: '거리 · 71.5 km', v: String(nm), u: 'NM' },
+        { k: '평균', v: '9.2', u: 'kn' },
+        { k: '최고', v: '24.1', u: 'kn' }
+      ],
+      fuel,
+      minus: () => this.setState({ fuel: Math.max(0, fuel - 5) }),
+      plus: () => this.setState({ fuel: fuel + 5 }),
+      fullOn: full ? 'true' : 'false',
+      fullBox: full ? '#111111' : '#FFFFFF',
+      toggleFull: () => this.setState({ full: !full }),
+      lph: fuel > 0 ? (fuel / hours).toFixed(1) : '—',
+      nmpl: fuel > 0 ? (nm / fuel).toFixed(2) : '—',
+      kmpl: fuel > 0 ? ((nm * 1.852) / fuel).toFixed(2) : '—'
+    };
+  }
+}
+</script>
+</body>
+</html>

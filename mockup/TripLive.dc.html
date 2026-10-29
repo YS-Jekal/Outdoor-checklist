@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>출항 중</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FFFFFF; display: flex; flex-direction: column; overflow: hidden">
+  <div style="position: relative; height: 340px; flex-shrink: 0; background: #E4EBEE">
+    <svg width="390" height="340" viewBox="0 0 390 340" role="img" aria-label="오늘 항적 지도: 전곡항에서 출발해 3번 어초를 거쳐 현재 위치까지">
+      <path d="M0 0 H150 C 140 40, 110 60, 96 92 C 84 120, 60 150, 40 190 C 28 214, 12 240, 0 252 Z" fill="#F5F5F2" stroke="#CDD3D1"/>
+      <path d="M300 0 H390 V120 C 372 112, 352 96, 340 74 C 328 52, 312 30, 300 0 Z" fill="#F5F5F2" stroke="#CDD3D1"/>
+      <path d="M248 238 C 262 226, 286 228, 292 244 C 298 260, 278 272, 262 268 C 248 264, 240 250, 248 238 Z" fill="#F5F5F2" stroke="#CDD3D1"/>
+      <path d="M92 104 C 120 120, 150 150, 170 190 S 214 250, 236 220 S 250 160, 282 150" fill="none" stroke="#111111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="85" y="97" width="14" height="14" fill="#111111"/>
+      <text x="104" y="96" font-size="12" font-weight="600" fill="#111111">전곡항</text>
+      <circle cx="214" cy="248" r="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="168" y="276" font-size="12" font-weight="600" fill="#111111">3번 어초 · 광어 3</text>
+      <circle cx="282" cy="150" r="16" fill="#F2541B" fill-opacity="0.25"/>
+      <circle cx="282" cy="150" r="7" fill="#F2541B" stroke="#FFFFFF" stroke-width="2.5"/>
+    </svg>
+    <div style="position: absolute; left: 16px; right: 16px; top: 20px; display: flex; justify-content: space-between; align-items: center">
+      <span style="background: #111111; color: #FFFFFF; padding: 6px 10px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 4px; background: #F2541B"></span>기록 중 · 05:52 출항</span>
+      <span style="background: #FFFFFF; padding: 6px 10px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600">GPS ● 배터리 62%</span>
+    </div>
+  </div>
+
+  <section style="padding: 16px 20px 0">
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid #111111">
+      <div style="padding: 12px 12px 12px 0; border-right: 1px solid #E8E8E8; border-bottom: 1px solid #E8E8E8; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: #5E5E5E">운항 시간</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 32px; font-weight: 600; letter-spacing: -1px">2:12<span style="font-size: 16px; color: #5E5E5E">:40</span></span>
+      </div>
+      <div style="padding: 12px 0 12px 14px; border-bottom: 1px solid #E8E8E8; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: #5E5E5E">거리</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 32px; font-weight: 600; letter-spacing: -1px">18.4<span style="font-size: 14px; color: #5E5E5E"> NM</span></span>
+      </div>
+      <div style="padding: 12px 12px 12px 0; border-right: 1px solid #E8E8E8; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: #5E5E5E">현재 속도</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 32px; font-weight: 600; letter-spacing: -1px">12.6<span style="font-size: 14px; color: #5E5E5E"> kn</span></span>
+      </div>
+      <div style="padding: 12px 0 12px 14px; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: #5E5E5E">엔진 시간 · 자동</span>
+        <span style="font-family: 'DM Sans', sans-serif; font-size: 32px; font-weight: 600; letter-spacing: -1px">+2.2<span style="font-size: 14px; color: #5E5E5E"> h</span></span>
+      </div>
+    </div>
+    <p style="margin: 10px 0 0; font-size: 13px; color: #5E5E5E">화면을 꺼도 기록은 계속돼요. 바다에서 신호가 없어도 폰에 저장했다가 귀항 후 올려요.</p>
+  </section>
+
+  <div style="padding: 14px 20px 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+    <a href="Catch.dc.html" style="min-height: 48px; border-radius: 4px; border: 1px solid #111111; color: #111111; font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">조과 기록</a>
+    <button style="min-height: 48px; border-radius: 4px; border: 1px solid #111111; background: #FFFFFF; color: #111111; font-family: inherit; font-size: 14px; font-weight: 600">포인트 저장</button>
+    <button style="min-height: 48px; border-radius: 4px; border: 1px solid #111111; background: #FFFFFF; color: #111111; font-family: inherit; font-size: 14px; font-weight: 600">사진 찍기</button>
+  </div>
+
+  <footer style="margin-top: auto; padding: 12px 20px 32px">
+    <a href="TripSummary.dc.html" style="min-height: 56px; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 17px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">귀항 · 기록 끝내기</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

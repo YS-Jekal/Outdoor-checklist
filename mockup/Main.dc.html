@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>나만의바다 홈</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FFFFFF; display: flex; flex-direction: column; overflow: hidden">
+  <header style="padding: 26px 20px 12px; display: flex; justify-content: space-between; align-items: baseline">
+    <span style="font-size: 20px; font-weight: 700; letter-spacing: -0.5px">나만의바다</span>
+    <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.2px; color: #5E5E5E">OCT 28 · 조금</span>
+  </header>
+
+  <main style="flex: 1; overflow: hidden; display: flex; flex-direction: column">
+    <a href="MyBoat.dc.html" style="text-decoration: none; color: #111111; display: block; position: relative">
+      <img src="img/myboat.jpg" alt="계류 중인 내 배 바다향" style="width: 100%; height: 180px; object-fit: cover; display: block">
+      <span style="position: absolute; left: 20px; bottom: 14px; background: #FFFFFF; padding: 6px 10px; font-size: 13px; font-weight: 600">바다향 · 전곡항 계류 중</span>
+    </a>
+
+    <section style="padding: 12px 20px 14px; border-bottom: 1px solid #E8E8E8; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 14px; font-weight: 600">{{region.name}} <span style="font-weight: 400; color: #5E5E5E">· {{region.tag}}</span></span>
+        <button onClick="{{togglePicker}}" aria-expanded="{{pickerOpen}}" style="min-height: 36px; padding: 0 2px; border: 0; background: none; font-family: inherit; font-size: 13px; color: #111111; text-decoration: underline; display: flex; align-items: center; gap: 4px">다른 지역 보기
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{chevron}}"/></svg>
+        </button>
+      </div>
+      <sc-if value="{{showPicker}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-wrap: wrap; gap: 6px">
+          <sc-for list="{{regions}}" as="r" hint-placeholder-count="4">
+            <button onClick="{{r.pick}}" aria-pressed="{{r.sel}}" style="min-height: 40px; padding: 0 12px; border-radius: 4px; border: 1px solid {{r.border}}; background: {{r.bg}}; color: {{r.fg}}; font-family: inherit; font-size: 14px; font-weight: 500">{{r.name}} <span style="font-size: 11px; opacity: 0.75">{{r.tag}}</span></button>
+          </sc-for>
+          <button style="min-height: 40px; padding: 0 12px; border-radius: 4px; border: 1px dashed #9A9A9A; background: #FFFFFF; color: #111111; font-family: inherit; font-size: 14px">+ 항구 검색</button>
+        </div>
+      </sc-if>
+      <a href="Tide.dc.html" style="text-decoration: none; color: #111111; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline">
+          <span style="font-size: 21px; font-weight: 600; letter-spacing: -0.5px">{{region.verdict}}</span>
+          <span style="font-size: 13px; color: #C23B0E; font-weight: 600">{{region.warn}}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr))">
+          <div style="display: flex; flex-direction: column; gap: 2px; padding-right: 12px; border-right: 1px solid #E8E8E8">
+            <span style="font-size: 12px; color: #5E5E5E">바람 · {{region.windDir}}</span>
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 24px; font-weight: 600; letter-spacing: -0.5px">{{region.wind}}<span style="font-size: 13px; font-weight: 500; color: #5E5E5E"> m/s</span></span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px; padding: 0 12px; border-right: 1px solid #E8E8E8">
+            <span style="font-size: 12px; color: #5E5E5E">파고</span>
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 24px; font-weight: 600; letter-spacing: -0.5px">{{region.wave}}<span style="font-size: 13px; font-weight: 500; color: #5E5E5E"> m</span></span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px; padding-left: 12px">
+            <span style="font-size: 12px; color: #5E5E5E">다음 간조</span>
+            <span style="font-family: 'DM Sans', sans-serif; font-size: 24px; font-weight: 600; letter-spacing: -0.5px">{{region.tide}}</span>
+          </div>
+        </div>
+      </a>
+      <a href="TripPlan.dc.html" style="min-height: 52px; padding: 0 16px; border-radius: 4px; background: #111111; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: space-between">
+        <span style="font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 4px; background: #F2541B"></span>출항하기</span>
+        <span style="font-size: 13px; color: #CFCFCF">목적지·연료 확인 →</span>
+      </a>
+    </section>
+
+    <a href="Inbox.dc.html" style="text-decoration: none; color: #111111; padding: 0 20px; min-height: 58px; border-bottom: 1px solid #E8E8E8; display: flex; align-items: center; gap: 12px">
+      <span style="min-width: 28px; height: 28px; padding: 0 6px; box-sizing: border-box; border-radius: 14px; background: #F2541B; color: #111111; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">12</span>
+      <span style="flex: 1; font-size: 16px; font-weight: 600">새로 찍은 배 사진 정리하기</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a href="MyBoat.dc.html" style="text-decoration: none; color: #111111; padding: 0 20px; min-height: 52px; border-bottom: 1px solid #E8E8E8; display: flex; align-items: center; gap: 12px">
+      <span style="font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: #C23B0E; min-width: 28px">D-21</span>
+      <span style="flex: 1; font-size: 15px">선박 보험 만기 · 11월 18일</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+
+    <div style="padding: 16px 20px 0; display: flex; justify-content: space-between; align-items: baseline">
+      <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; color: #5E5E5E">RECENTLY SPOTTED</span>
+      <a href="Collection.dc.html" style="font-size: 13px; color: #5E5E5E">전체</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; padding: 10px 20px 0">
+      <sc-for list="{{recent}}" as="b" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <img src="{{b.src}}" alt="{{b.name}}" style="width: 100%; height: 84px; object-fit: cover; display: block">
+          <span style="font-size: 12px; color: #5E5E5E">{{b.name}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </main>
+
+  <nav aria-label="하단 메뉴" style="display: flex; border-top: 1px solid #E8E8E8; background: #FFFFFF; padding: 0 8px 18px">
+    <a href="Main.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #111111; font-size: 14px; font-weight: 700"><span style="width: 4px; height: 4px; border-radius: 2px; background: #F2541B"></span>홈</a>
+    <a href="Tide.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #5E5E5E; font-size: 14px; font-weight: 500"><span style="width: 4px; height: 4px"></span>바다</a>
+    <a href="MyBoat.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #5E5E5E; font-size: 14px; font-weight: 500"><span style="width: 4px; height: 4px"></span>내 배</a>
+    <a href="Collection.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #5E5E5E; font-size: 14px; font-weight: 500"><span style="width: 4px; height: 4px"></span>컬렉션</a>
+    <a href="CatchInsights.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: #5E5E5E; font-size: 14px; font-weight: 500"><span style="width: 4px; height: 4px"></span>조과</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { region: 0, open: false };
+  }
+  renderVals() {
+    const list = [
+      { name: '전곡항', tag: '계류장', verdict: '오전 출항, 좋아요', warn: '오후 풍속 8m/s ↑', windDir: '북서', wind: '4.0', wave: '0.5', tide: '11:58' },
+      { name: '삼길포항', tag: '최근 출항', verdict: '하루 종일 무난해요', warn: '', windDir: '서', wind: '3.2', wave: '0.4', tide: '12:21' },
+      { name: '궁평항', tag: '즐겨찾기', verdict: '오전만 추천해요', warn: '오후 파고 1.0m ↑', windDir: '북서', wind: '5.1', wave: '0.6', tide: '11:49' },
+      { name: '홍원항', tag: '최근 출항', verdict: '오늘은 쉬어 가요', warn: '풍랑예비특보', windDir: '북', wind: '9.3', wave: '1.8', tide: '12:40' }
+    ];
+    const cur = this.state.region;
+    const open = this.state.open;
+    return {
+      region: list[cur],
+      showPicker: open,
+      pickerOpen: open ? 'true' : 'false',
+      chevron: open ? 'M6 15l6-6 6 6' : 'M6 9l6 6 6-6',
+      togglePicker: () => this.setState({ open: !open }),
+      regions: list.map((r, i) => ({
+        name: r.name,
+        tag: r.tag,
+        sel: i === cur ? 'true' : 'false',
+        bg: i === cur ? '#111111' : '#FFFFFF',
+        fg: i === cur ? '#FFFFFF' : '#111111',
+        border: i === cur ? '#111111' : '#CFCFCF',
+        pick: () => this.setState({ region: i, open: false })
+      })),
+      recent: [
+        { name: '[모델 A] · 수영만', src: 'img/yacht.jpg' },
+        { name: '[모델 B] · 전곡항', src: 'img/sport.jpg' },
+        { name: '모델 모름 · 해변', src: 'img/beach.jpg' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

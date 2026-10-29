@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>출항 계획</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FFFFFF; display: flex; flex-direction: column; overflow: hidden">
+  <header style="padding: 24px 8px 0; display: flex; align-items: center">
+    <a href="Main.dc.html" aria-label="뒤로" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #111111">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+  </header>
+
+  <main style="flex: 1; padding: 4px 20px 0; display: flex; flex-direction: column; overflow: hidden">
+    <span style="font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; color: #5E5E5E">TRIP PLAN · OCT 28</span>
+    <h1 style="margin: 8px 0 14px; font-size: 26px; font-weight: 600; letter-spacing: -0.7px">어디로 가세요?</h1>
+
+    <div style="display: grid; grid-template-columns: 20px 1fr; column-gap: 12px; border-top: 1px solid #111111; padding-top: 10px">
+      <div style="display: flex; flex-direction: column; align-items: center; padding-top: 16px">
+        <span style="width: 10px; height: 10px; background: #111111"></span>
+        <span style="width: 1.5px; height: 40px; background: repeating-linear-gradient(#111111 0 4px, transparent 4px 8px)"></span>
+        <span style="width: 10px; height: 10px; border-radius: 5px; background: #F2541B"></span>
+      </div>
+      <div style="display: flex; flex-direction: column">
+        <label style="display: flex; flex-direction: column; font-size: 12px; color: #5E5E5E; padding-bottom: 6px; border-bottom: 1px solid #E8E8E8">출항지
+          <input value="제부도" style="min-height: 34px; border: 0; outline: none; padding: 0; font-family: inherit; font-size: 18px; font-weight: 600; color: #111111; background: transparent">
+        </label>
+        <label style="display: flex; flex-direction: column; font-size: 12px; color: #5E5E5E; padding-top: 8px">목적지
+          <input value="덕적도" style="min-height: 34px; border: 0; outline: none; padding: 0; font-family: inherit; font-size: 18px; font-weight: 600; color: #111111; background: transparent">
+        </label>
+      </div>
+    </div>
+    <a href="RoutePlot.dc.html" style="margin-top: 8px; min-height: 44px; padding: 0 12px; background: #F4F5F6; text-decoration: none; color: #111111; display: flex; align-items: center; justify-content: space-between">
+      <span style="font-size: 14px"><strong style="font-weight: 600">내가 그린 경로</strong> · 경유지 3곳 · 편도 58 km</span>
+      <span style="font-size: 13px; text-decoration: underline">경로 수정</span>
+    </a>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 13px; color: #5E5E5E">경로</span>
+        <div style="display: flex; gap: 4px">
+          <sc-for list="{{trips}}" as="o" hint-placeholder-count="2">
+            <button onClick="{{o.pick}}" aria-pressed="{{o.sel}}" style="flex: 1; min-height: 40px; border-radius: 4px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.fg}}; font-family: inherit; font-size: 14px; font-weight: 500">{{o.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span style="font-size: 13px; color: #5E5E5E">지금 연료</span>
+        <div style="display: flex; gap: 4px">
+          <sc-for list="{{levels}}" as="o" hint-placeholder-count="3">
+            <button onClick="{{o.pick}}" aria-pressed="{{o.sel}}" style="flex: 1; min-height: 40px; border-radius: 4px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.fg}}; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600">{{o.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 14px; border-top: 1px solid #111111">
+      <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; min-height: 40px; padding: 8px 0; box-sizing: border-box; border-bottom: 1px solid #E8E8E8">
+          <span style="display: flex; flex-direction: column; gap: 1px"><span style="font-size: 14px">{{r.k}}</span><span style="font-size: 11px; color: #5E5E5E">{{r.note}}</span></span>
+          <span style="font-family: 'DM Sans', sans-serif; font-size: 20px; font-weight: 600">{{r.v}}<span style="font-size: 12px; color: #5E5E5E"> {{r.u}}</span></span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top: 12px; padding: 12px 14px; background: {{verdict.bg}}; display: flex; gap: 10px; align-items: flex-start">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{verdict.fg}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17v.5"/></svg>
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 15px; font-weight: 700; color: {{verdict.fg}}">{{verdict.title}}</span>
+        <span style="font-size: 13px; color: {{verdict.fg}}">{{verdict.sub}}</span>
+      </div>
+    </div>
+    <p style="margin: 8px 0 0; font-size: 12px; line-height: 1.5; color: #5E5E5E">단순 계산이에요. 바람·파도·조류·적재량·속도에 따라 연료 소모가 크게 달라질 수 있어요. 안전을 위해 추가 연료를 꼭 확보하세요.</p>
+  </main>
+
+  <footer style="padding: 10px 20px 28px; display: flex; flex-direction: column; gap: 2px">
+    <a href="Checklist.dc.html" style="min-height: 54px; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">준비물 체크하고 출항</a>
+    <a href="TripLive.dc.html" style="min-height: 40px; font-size: 14px; color: #5E5E5E; text-decoration: none; display: flex; align-items: center; justify-content: center">목적지 없이 출항</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { trip: '왕복', level: '가득' };
+  }
+  chips(labels, key) {
+    return labels.map((label) => {
+      const on = this.state[key] === label;
+      return {
+        label,
+        sel: on ? 'true' : 'false',
+        bg: on ? '#111111' : '#FFFFFF',
+        fg: on ? '#FFFFFF' : '#111111',
+        border: on ? '#111111' : '#CFCFCF',
+        pick: () => this.setState({ [key]: label })
+      };
+    });
+  }
+  renderVals() {
+    const oneWayKm = 58;
+    const kmPerL = 0.83;
+    const tankL = 150;
+    const fracs = { '가득': 1, '3/4': 0.75, '1/2': 0.5 };
+    const km = this.state.trip === '왕복' ? oneWayKm * 2 : oneWayKm;
+    const nm = km / 1.852;
+    const need = km / kmPerL;
+    const withReserve = need * 1.5;
+    const onboard = tankL * fracs[this.state.level];
+    const short = withReserve - onboard;
+    const extra = Math.ceil(short / 5) * 5;
+    let verdict;
+    if (need > onboard) {
+      verdict = { bg: '#FBE3DA', fg: '#8A2A0A', title: '예비 없이도 연료가 모자랄 수 있어요', sub: '보조 연료 ' + extra + ' L 이상을 준비하거나 목적지를 다시 생각해 보세요.' };
+    } else if (short > 0) {
+      verdict = { bg: '#FFF1EB', fg: '#A3330B', title: '예비 연료가 약 ' + Math.ceil(short) + ' L 부족해요', sub: '보조 연료통 ' + extra + ' L 이상을 준비하세요.' };
+    } else {
+      verdict = { bg: '#F4F5F6', fg: '#111111', title: '예비 연료까지 충분해요', sub: '여유 약 ' + Math.floor(-short) + ' L · 그래도 출항 전 연료를 확인하세요.' };
+    }
+    return {
+      trips: this.chips(['왕복', '편도'], 'trip'),
+      levels: this.chips(['가득', '3/4', '1/2'], 'level'),
+      rows: [
+        { k: '거리', note: '내가 그린 경로 기준 (직선 44 km)', v: Math.round(km) + ' km · ' + Math.round(nm), u: 'NM' },
+        { k: '예상 연료', note: '내 평균 ' + kmPerL + ' km/L · 최근 출항 12회', v: Math.round(need), u: 'L' },
+        { k: '예비 포함 필요', note: '1/3 규칙: 가는 데 · 오는 데 · 예비', v: Math.round(withReserve), u: 'L' },
+        { k: '지금 실린 연료', note: '연료탱크 ' + tankL + ' L 기준', v: Math.round(onboard), u: 'L' }
+      ],
+      verdict
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>포인트 캐치</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&amp;display=swap">
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard.woff2') format('woff2');font-weight:45 920;font-display:swap}
+body{margin:0;font-family:'Pretendard',system-ui,sans-serif;color:#111111;-webkit-font-smoothing:antialiased}
+a{color:#111111}a:hover{color:#5E5E5E}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #FFFFFF; display: flex; flex-direction: column; overflow: hidden">
+  <div style="position: relative; height: 230px; flex-shrink: 0; background: #E4EBEE">
+    <svg width="390" height="230" viewBox="0 0 390 230" role="img" aria-label="지금 위치에 캐치한 포인트" style="display: block">
+      <path d="M320 0 H390 V230 H350 C 356 180, 340 140, 352 100 C 362 60, 336 30, 320 0 Z" fill="#F5F5F2" stroke="#CDD3D1"/>
+      <path d="M60 150 C 74 140, 96 146, 96 162 C 96 178, 76 184, 64 176 C 52 168, 50 158, 60 150 Z" fill="#F5F5F2" stroke="#CDD3D1"/>
+      <circle cx="190" cy="118" r="38" fill="#F2541B" fill-opacity="0.12"/>
+      <circle cx="190" cy="118" r="22" fill="#F2541B" fill-opacity="0.2"/>
+      <path d="M190 102 l12 16 l-12 16 l-12 -16 z" fill="#F2541B" stroke="#FFFFFF" stroke-width="2.5"/>
+    </svg>
+    <a href="FishMap.dc.html" aria-label="닫기" style="position: absolute; left: 8px; top: 20px; width: 44px; height: 44px; border-radius: 22px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #111111">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </a>
+    <span style="position: absolute; right: 12px; bottom: 12px; background: #FFFFFF; padding: 4px 8px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600">GPS ±6 m · 10초 평균</span>
+  </div>
+
+  <div style="background: #111111; color: #FFFFFF; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center">
+    <span style="font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2541B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>포인트 저장됨 · 14:22
+    </span>
+    <button style="min-height: 36px; border: 0; background: none; font-family: inherit; font-size: 13px; color: #CFCFCF; text-decoration: underline">취소</button>
+  </div>
+
+  <main style="flex: 1; overflow-y: auto; padding: 12px 20px 0; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <span style="font-family: 'DM Sans', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.5px">37°11.42′N · 126°31.08′E</span>
+      <span style="font-size: 13px; color: #5E5E5E">자동 기록 · 10.28 · 중들물 · 수온 17.8°C · 북서 4.0 m/s</span>
+    </div>
+    <span style="font-size: 14px; font-weight: 600; color: #C23B0E">친구배를 타셨을 때는, 선주님께 먼저 양해를 구하세요.</span>
+    <span style="font-size: 12px; color: #5E5E5E; margin-top: -4px">아래는 선택이에요. 지금 안 채워도 나중에 지도에서 고칠 수 있어요.</span>
+
+    <label style="display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: #5E5E5E">이름
+      <input value="포인트 10.28-1" style="min-height: 40px; border: 0; border-bottom: 1.5px solid #111111; outline: none; padding: 0; font-family: inherit; font-size: 17px; font-weight: 500; color: #111111; background: transparent">
+    </label>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 12px; color: #5E5E5E">어느 배에서?</span>
+      <div style="display: flex; gap: 5px">
+        <sc-for list="{{boats}}" as="o" hint-placeholder-count="3">
+          <button onClick="{{o.pick}}" aria-pressed="{{o.sel}}" style="min-height: 40px; padding: 0 12px; border-radius: 4px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.fg}}; font-family: inherit; font-size: 14px; font-weight: 500">{{o.label}}</button>
+        </sc-for>
+      </div>
+      <input value="{{boatName}}" placeholder="배 이름 (선택)" style="min-height: 38px; border: 0; border-bottom: 1px solid #CFCFCF; outline: none; padding: 0; font-family: inherit; font-size: 15px; color: #111111; background: transparent">
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <span style="font-size: 12px; color: #5E5E5E">잡힌 어종 (여러 개)</span>
+      <div style="display: flex; gap: 5px; flex-wrap: wrap">
+        <sc-for list="{{fish}}" as="o" hint-placeholder-count="4">
+          <button onClick="{{o.pick}}" aria-pressed="{{o.sel}}" style="min-height: 38px; padding: 0 12px; border-radius: 19px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.fg}}; font-family: inherit; font-size: 14px; font-weight: 500">{{o.label}}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <label style="display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: #5E5E5E">수심 · 어탐 화면 보고 입력
+      <span style="display: flex; align-items: baseline; gap: 4px; border-bottom: 1px solid #CFCFCF"><input value="22" inputmode="decimal" style="width: 100%; min-height: 38px; border: 0; outline: none; padding: 0; font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 600; color: #111111; background: transparent"><span style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #111111">m</span></span>
+    </label>
+
+    <div style="display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; background: #F4F5F6; font-size: 13px; line-height: 1.5">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <span>{{privacy}}</span>
+    </div>
+  </main>
+
+  <footer style="padding: 10px 20px 28px; display: flex; flex-direction: column; gap: 4px; border-top: 1px solid #E8E8E8">
+    <a href="FishMap.dc.html" style="min-height: 54px; border-radius: 4px; background: #111111; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center">완료</a>
+    <button style="min-height: 40px; border: 0; background: none; font-family: inherit; font-size: 14px; color: #5E5E5E; text-decoration: underline">내 어탐기용 파일로 내보내기 (GPX · USR)</button>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { boat: '유어선', fish: ['광어'] };
+  }
+  chip(label, on, pick) {
+    return { label, sel: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', border: on ? '#111111' : '#CFCFCF', pick };
+  }
+  renderVals() {
+    const s = this.state;
+    const names = { '유어선': '○○호 (선장 [이름])', '동호인 보트': '[동호인] 님 보트', '내 배': '바다향' };
+    const privacy = {
+      '유어선': '유어선 포인트는 나만 볼 수 있고 공유·내보내기 목록에 남의 포인트로 표시돼요. 선장님의 영업 포인트이니까요.',
+      '동호인 보트': '나만 보기로 저장돼요. 친구배를 타셨을 때는, 선주님께 먼저 양해를 구하세요.',
+      '내 배': '나만 보기로 저장돼요. 원하면 나중에 일행과 공유할 수 있어요.'
+    };
+    return {
+      boats: ['유어선', '동호인 보트', '내 배'].map((label) => this.chip(label, s.boat === label, () => this.setState({ boat: label }))),
+      boatName: names[s.boat],
+      privacy: privacy[s.boat],
+      fish: ['광어', '우럭', '쭈꾸미', '+ 기타'].map((label) => {
+        const on = s.fish.includes(label);
+        return this.chip(label, on, () => this.setState({ fish: on ? s.fish.filter((x) => x !== label) : s.fish.concat([label]) }));
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

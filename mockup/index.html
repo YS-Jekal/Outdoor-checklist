@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나만의바다 · 화면 목업</title>
+<style>
+@font-face{font-family:Pretendard;src:url('fonts/Pretendard.woff2') format('woff2');font-display:swap}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#191919;font-family:Pretendard,system-ui,sans-serif}
+header{position:sticky;top:0;z-index:2;background:#fff;border-bottom:1px solid #dedede;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+h1{font-size:18px;font-weight:600;margin:0}.controls{display:flex;gap:6px}.controls button{border:1px solid #d5d5d5;background:#fff;color:#333;border-radius:4px;padding:7px 10px;font:inherit;font-size:13px;cursor:pointer}.controls button[aria-pressed=true]{background:#191919;color:#fff;border-color:#191919}
+main{padding:10px 28px 50px}.row{position:relative;border-bottom:1px solid #e6e6e6;padding:24px 0 30px;overflow-x:auto}.row-title{font-size:14px;font-weight:600;margin:0 0 16px}.boards{position:relative}.board{position:absolute;top:0}.board a{display:block;color:inherit;text-decoration:none;font-size:12px;margin:0 0 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.board a:hover{text-decoration:underline}iframe{display:block;border:1px solid #ddd;background:#f8f8f8;transform-origin:top left}
+@media(max-width:600px){header{padding:14px;align-items:flex-start;flex-direction:column}main{padding-left:14px;padding-right:14px}}
+</style>
+<script src="boards.js"></script>
+</head>
+<body>
+<header><h1>나만의바다 · 화면 목업 (내부 공유용)</h1><nav class="controls" aria-label="화면 확대 비율"><button data-scale="0.35">35%</button><button data-scale="0.5" aria-pressed="true">50%</button><button data-scale="0.75">75%</button><button data-scale="1">100%</button></nav></header>
+<main id="gallery"></main>
+<script>
+(function(){
+  var data=window.BOARDS||{},boards=data.boards||{},notes=data.notes||{},gallery=document.getElementById('gallery'),scale=.5;
+  var entries=Object.keys(boards).map(function(file){return Object.assign({file:file},boards[file]);}).sort(function(a,b){return a.y-b.y||a.x-b.x;});
+  var ys=Array.from(new Set(entries.map(function(b){return b.y;}))).sort(function(a,b){return a-b;});
+  function titleFor(y){var candidates=Object.keys(notes).map(function(k){return notes[k];}).filter(function(n){return typeof n.y==='number'&&n.y<=y;}).sort(function(a,b){return b.y-a.y;});return candidates.length?candidates[0].text:'화면';}
+  function draw(){gallery.replaceChildren();ys.forEach(function(y){var rowBoards=entries.filter(function(b){return b.y===y;}),minX=Math.min.apply(null,rowBoards.map(function(b){return b.x;})),maxRight=Math.max.apply(null,rowBoards.map(function(b){return b.x+b.w;})),maxH=Math.max.apply(null,rowBoards.map(function(b){return b.h;}));var section=document.createElement('section');section.className='row';var heading=document.createElement('h2');heading.className='row-title';heading.textContent=titleFor(y);section.appendChild(heading);var canvas=document.createElement('div');canvas.className='boards';canvas.style.width=((maxRight-minX)*scale)+'px';canvas.style.height=(maxH*scale)+'px';rowBoards.forEach(function(b){var card=document.createElement('div');card.className='board';card.style.left=((b.x-minX)*scale)+'px';card.style.width=(b.w*scale)+'px';var link=document.createElement('a');link.href=b.file;link.target='_blank';link.rel='noopener';link.title=b.title;link.textContent=b.title;var frame=document.createElement('iframe');frame.src=b.file;frame.title=b.title;frame.width=b.w;frame.height=b.h;frame.style.width=b.w+'px';frame.style.height=b.h+'px';frame.style.transform='scale('+scale+')';card.append(link,frame);canvas.appendChild(card);});section.appendChild(canvas);gallery.appendChild(section);});}
+  document.querySelectorAll('[data-scale]').forEach(function(button){button.addEventListener('click',function(){scale=Number(button.dataset.scale);document.querySelectorAll('[data-scale]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});draw();});});draw();
+}());
+</script>
+</body>
+</html>
