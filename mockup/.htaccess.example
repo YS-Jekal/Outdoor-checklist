@@ -1,8 +1,0 @@
-AuthType Basic
-AuthName "Namanui Bada Mockup"
-AuthUserFile /절대경로/.htpasswd
-Require valid-user
-
-<FilesMatch "^\.ht">
-  Require all denied
-</FilesMatch>
